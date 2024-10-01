@@ -48,7 +48,9 @@
           <p>¿Ya tienes una cuenta? <a href="/Login">Inicia sesión</a></p>
         </div>
 
-        <p v-if="error" class="text-danger mt-3">{{ error }}</p>
+        <div v-if="error" class="text-danger mt-3">
+          <p>{{ error }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -68,6 +70,22 @@ export default {
   },
   methods: {
     async register() {
+      // Validación del formato de correo electrónico
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(this.correo)) {
+        this.error = "El formato del correo electrónico es inválido.";
+        return;
+      }
+
+      // Validación de la contraseña (mínimo 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial)
+      const passwordPattern =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+      if (!passwordPattern.test(this.password)) {
+        this.error =
+          "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
+        return;
+      }
+
       try {
         const response = await axios.post("http://localhost:4000/register", {
           nombre: this.nombre,
@@ -91,7 +109,9 @@ export default {
 <style>
 .register-container {
   height: 100vh;
-  background-color: #6fb3c9;
+  background: url("https://cdn.pixabay.com/photo/2014/07/06/13/55/calculator-385506_1280.jpg")
+    no-repeat center center fixed;
+  background-size: cover;
 }
 
 .card {

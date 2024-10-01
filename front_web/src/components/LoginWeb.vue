@@ -84,7 +84,9 @@ export default {
 <style>
 .login-container {
   height: 100vh;
-  background-color: #6fb3c9;
+  background: url("https://cdn.pixabay.com/photo/2022/10/23/15/20/online-banking-7541521_1280.jpg")
+    no-repeat center center fixed;
+  background-size: cover;
 }
 
 .card {
