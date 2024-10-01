@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Blog__Net</a>
+      <a class="navbar-brand" href="#">Finanzas_Web</a>
 
       <ul class="navbar-nav ms-auto">
         <li class="nav-item dropdown">

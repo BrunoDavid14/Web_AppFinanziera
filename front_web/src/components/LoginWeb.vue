@@ -69,7 +69,7 @@ export default {
           localStorage.setItem("nombre", response.data.nombre);
 
           // Redirigir al dashboard si el login es exitoso
-          this.$router.push("/dash");
+          this.$router.push("/Dashboard");
         } else {
           this.error = "Error: No se recibió un token.";
         }
