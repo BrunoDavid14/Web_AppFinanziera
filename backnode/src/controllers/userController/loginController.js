@@ -32,8 +32,11 @@ async function loginUsuario(req, res) {
       expiresIn: '1h',
     });
 
-    // Responder con el token
-    res.status(200).json({ token });
+    // Responder con el token y el nombre del usuario
+    res.status(200).json({ 
+    token, 
+    nombre: user.nombre // Asegúrate de que 'nombre' esté en la base de datos
+  });
   } catch (error) {
     console.error('Error durante el login:', error);
     res.status(500).json({ error: 'Error interno del servidor' });

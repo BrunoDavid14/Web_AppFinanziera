@@ -14,6 +14,20 @@ async function hashearPassword(password) {
 async function registrarUsuario(req, res) {
   const { nombre, correo, password } = req.body;
 
+    // Validación del formato de correo
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(correo)) {
+    return res.status(400).json({ error: 'Formato de correo electrónico inválido' });
+    }
+
+     // Validación de la seguridad de la contraseña
+  const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+  if (!passwordPattern.test(password)) {
+    return res.status(400).json({
+      error: 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.'
+    });
+  }
+
   try {
     // Verificar si el usuario ya existe
     const query = 'SELECT * FROM users WHERE correo = $1';

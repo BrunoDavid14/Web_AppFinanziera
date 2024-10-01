@@ -64,8 +64,9 @@ export default {
         });
 
         if (response.data.token) {
-          // Guardar el token en localStorage
+          // Guardar el token y el nombre del usuario en localStorage
           localStorage.setItem("token", response.data.token);
+          localStorage.setItem("nombre", response.data.nombre);
 
           // Redirigir al dashboard si el login es exitoso
           this.$router.push("/dash");
