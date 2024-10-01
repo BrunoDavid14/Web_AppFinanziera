@@ -15,8 +15,8 @@ const routes = [
     component: RegisterWeb,
   },
   {
-    path: "/dash",
-    name: "Dash",
+    path: "/dashboard",
+    name: "Dashboard",
     component: Dashboard,
     meta: { requiresAuth: true },
   },
@@ -27,27 +27,18 @@ const router = createRouter({
   routes,
 });
 
+// Middleware para verificar la autenticación
 router.beforeEach((to, from, next) => {
-  console.log(`Navigating to: ${to.path}`); // Log de la ruta a la que intentas acceder
+  if (to.matched.some((route) => route.meta.requiresAuth)) {
+    const token = localStorage.getItem("token"); // Obtiene el token del localStorage
 
-  // Verificamos si la ruta requiere autenticación
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    const token = localStorage.getItem("token"); // Verificamos si hay un token en localStorage
-    console.log("Token encontrado:", token);
-
-    if (!token) {
-      // Si no hay token, redirigimos al login
-      console.log("No hay token, redirigiendo a Home");
-      next({ name: "Home" });
+    if (token) {
+      next(); // Permitir el acceso a la ruta
     } else {
-      // Si hay token, permitimos el acceso a la ruta protegida
-      console.log("Token válido, permitiendo acceso a la ruta protegida");
-      next();
+      next({ name: "Login" }); // Redirigir al login si no hay token
     }
   } else {
-    // Si la ruta no requiere autenticación, permitimos el acceso
-    console.log("Ruta no protegida, permitiendo acceso");
-    next();
+    next(); // Siempre permitir el acceso a rutas no protegidas
   }
 });
 

@@ -1,5 +1,11 @@
 <template>
-  <div class="dashboard">
-    <h1>This is an about page</h1>
-  </div>
+  <DashboardLayout> </DashboardLayout>
 </template>
+
+<script setup>
+import DashboardLayout from "@/layouts/DashboardLayout.vue";
+</script>
+
+<style scoped>
+/* Add view-specific styles here */
+</style>
