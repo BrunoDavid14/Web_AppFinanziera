@@ -91,7 +91,9 @@ export default {
 <style>
 .register-container {
   height: 100vh;
-  background-color: #6fb3c9;
+  background: url("https://cdn.pixabay.com/photo/2014/07/06/13/55/calculator-385506_1280.jpg")
+    no-repeat center center fixed;
+  background-size: cover;
 }
 
 .card {
