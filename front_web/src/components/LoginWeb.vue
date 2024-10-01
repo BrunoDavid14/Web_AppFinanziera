@@ -1,18 +1,47 @@
 <template>
-  <div class="login">
-    <h2>Iniciar Sesión</h2>
-    <form @submit.prevent="login">
-      <div>
-        <label for="email">Correo:</label>
-        <input type="email" v-model="correo" required />
+  <div class="login-container d-flex align-items-center justify-content-center">
+    <div class="card text-center">
+      <div class="card-body">
+        <form @submit.prevent="login">
+          <div class="mb-3">
+            <label for="correo" class="form-label">
+              <i class="fas fa-user"></i>
+            </label>
+            <input
+              type="email"
+              class="form-control"
+              id="correo"
+              v-model="correo"
+              placeholder="Correo"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">
+              <i class="fas fa-key"></i>
+            </label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              v-model="password"
+              placeholder="Contraseña"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn btn-danger">Iniciar Sesión</button>
+        </form>
+
+        <div class="mt-3">
+          <p>¿No tienes una cuenta? <a href="#">Regístrate</a></p>
+          <p><a href="#">¿Olvidaste tu contraseña?</a></p>
+        </div>
+
+        <p v-if="error" class="text-danger mt-3">{{ error }}</p>
       </div>
-      <div>
-        <label for="password">Contraseña:</label>
-        <input type="password" v-model="password" required />
-      </div>
-      <button type="submit">Iniciar Sesión</button>
-    </form>
-    <p v-if="error">{{ error }}</p>
+    </div>
   </div>
 </template>
 
@@ -35,10 +64,10 @@ export default {
           password: this.password,
         });
 
-        // Almacenar el token en localStorage o sessionStorage
+        // Guardar el token en localStorage
         localStorage.setItem("token", response.data.token);
 
-        // Redirigir al usuario a otra vista si el login es exitoso
+        // Redirigir al dashboard si el login es exitoso
         this.$router.push("/dashboard");
       } catch (error) {
         this.error = "Error de autenticación. Verifica tu correo y contraseña.";
@@ -49,11 +78,37 @@ export default {
 </script>
 
 <style>
-.login {
-  max-width: 300px;
-  margin: 0 auto;
-  padding: 2em;
+.login-container {
+  height: 100vh;
+  background-color: #6fb3c9;
+}
+
+.card {
+  width: 400px;
+  background-color: #f4a261;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-danger {
+  background-color: #d9534f;
+  border: none;
+  width: 100%;
+}
+
+.btn-danger:hover {
+  background-color: #c9302c;
+}
+
+.form-control {
+  border-radius: 5px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 10px;
+}
+
+.form-label i {
+  margin-right: 5px;
+  color: #fff;
 }
 </style>
