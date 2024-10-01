@@ -9,7 +9,7 @@ async function loginUsuario(req, res) {
   const { correo, password } = req.body;
 
   try {
-    // Buscar el usuario en la base de datos
+    // Buscar el usuario en la base de datos por correo
     const query = 'SELECT * FROM users WHERE correo = $1';
     const result = await db.query(query, [correo]);
 
@@ -20,21 +20,24 @@ async function loginUsuario(req, res) {
     const user = result.rows[0];
     console.log("Usuario encontrado:", user);
 
-    // Comparar la contraseña en texto plano
-    if (password !== user.password) {
+    // Comparar la contraseña en texto plano con la contraseña hasheada
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
       return res.status(400).json({ error: 'Contraseña incorrecta' });
     }
 
-    // Generar el token JWT
+    // Generar el token JWT si la contraseña es correcta
     const token = jwt.sign({ id: user.id, correo: user.correo }, 'secretKey', {
       expiresIn: '1h',
     });
 
+    // Responder con el token
     res.status(200).json({ token });
   } catch (error) {
     console.error('Error durante el login:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
-  } 
+  }
 }
 
 module.exports = {

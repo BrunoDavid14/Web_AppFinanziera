@@ -1,12 +1,24 @@
 <template>
-  <div class="login-container d-flex align-items-center justify-content-center">
+  <div
+    class="register-container d-flex align-items-center justify-content-center"
+  >
     <div class="card text-center">
       <div class="card-body">
-        <form @submit.prevent="login">
+        <form @submit.prevent="register">
           <div class="mb-3">
-            <label for="correo" class="form-label">
-              <i class="fas fa-user"></i>
-            </label>
+            <label for="nombre" class="form-label"></label>
+            <input
+              type="text"
+              class="form-control"
+              id="nombre"
+              v-model="nombre"
+              placeholder="Nombre"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="correo" class="form-label"></label>
             <input
               type="email"
               class="form-control"
@@ -18,9 +30,7 @@
           </div>
 
           <div class="mb-3">
-            <label for="password" class="form-label">
-              <i class="fas fa-key"></i>
-            </label>
+            <label for="password" class="form-label"></label>
             <input
               type="password"
               class="form-control"
@@ -31,11 +41,11 @@
             />
           </div>
 
-          <button type="submit" class="btn btn-danger">Iniciar Sesión</button>
+          <button type="submit" class="btn btn-primary">Registrarse</button>
         </form>
 
         <div class="mt-3">
-          <p>¿No tienes una cuenta? <a href="/Register">Regístrate</a></p>
+          <p>¿Ya tienes una cuenta? <a href="/Login">Inicia sesión</a></p>
         </div>
 
         <p v-if="error" class="text-danger mt-3">{{ error }}</p>
@@ -50,30 +60,27 @@ import axios from "axios";
 export default {
   data() {
     return {
+      nombre: "",
       correo: "",
       password: "",
       error: "",
     };
   },
   methods: {
-    async login() {
+    async register() {
       try {
-        const response = await axios.post("http://localhost:4000/login", {
+        const response = await axios.post("http://localhost:4000/register", {
+          nombre: this.nombre,
           correo: this.correo,
           password: this.password,
         });
 
-        if (response.data.token) {
-          // Guardar el token en localStorage
-          localStorage.setItem("token", response.data.token);
+        console.log("Registro exitoso:", response.data);
 
-          // Redirigir al dashboard si el login es exitoso
-          this.$router.push("/dash");
-        } else {
-          this.error = "Error: No se recibió un token.";
-        }
+        // Redirigir al login si el registro es exitoso
+        this.$router.push("/login");
       } catch (error) {
-        this.error = "Error de autenticación. Verifica tu correo y contraseña.";
+        this.error = "Error durante el registro. Verifica los datos.";
         console.error(error); // Muestra el error en la consola para depuración
       }
     },
@@ -82,7 +89,7 @@ export default {
 </script>
 
 <style>
-.login-container {
+.register-container {
   height: 100vh;
   background-color: #6fb3c9;
 }
@@ -95,14 +102,14 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.btn-danger {
-  background-color: #d9534f;
+.btn-primary {
+  background-color: #007bff;
   border: none;
   width: 100%;
 }
 
-.btn-danger:hover {
-  background-color: #c9302c;
+.btn-primary:hover {
+  background-color: #0056b3;
 }
 
 .form-control {
@@ -111,8 +118,7 @@ export default {
   padding: 10px;
 }
 
-.form-label i {
-  margin-right: 5px;
-  color: #fff;
+.form-label {
+  margin-bottom: 5px;
 }
 </style>
