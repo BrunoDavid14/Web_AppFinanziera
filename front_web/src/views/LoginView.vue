@@ -4,14 +4,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 // @ is an alias to /src
 import LoginWeb from "@/components/LoginWeb";
-
-export default {
-  name: "HomeView",
-  components: {
-    LoginWeb,
-  },
-};
 </script>

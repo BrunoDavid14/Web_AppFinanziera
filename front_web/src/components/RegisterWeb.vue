@@ -41,6 +41,18 @@
             />
           </div>
 
+          <div class="mb-3">
+            <label for="confirmPassword" class="form-label"></label>
+            <input
+              type="password"
+              class="form-control"
+              id="confirmPassword"
+              v-model="confirmPassword"
+              placeholder="Confirmar Contraseña"
+              required
+            />
+          </div>
+
           <button type="submit" class="btn btn-primary">Registrarse</button>
         </form>
 
@@ -57,7 +69,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { register } from "../services/AuthService";
 
 export default {
   data() {
@@ -65,6 +77,7 @@ export default {
       nombre: "",
       correo: "",
       password: "",
+      confirmPassword: "",
       error: "",
     };
   },
@@ -86,13 +99,18 @@ export default {
         return;
       }
 
-      try {
-        const response = await axios.post("http://localhost:4000/register", {
-          nombre: this.nombre,
-          correo: this.correo,
-          password: this.password,
-        });
+      // Verificar si las contraseñas coinciden
+      if (this.password !== this.confirmPassword) {
+        this.error = "Las contraseñas no coinciden.";
+        return;
+      }
 
+      try {
+        const response = await register(
+          this.nombre,
+          this.correo,
+          this.password
+        );
         console.log("Registro exitoso:", response.data);
 
         // Redirigir al login si el registro es exitoso
