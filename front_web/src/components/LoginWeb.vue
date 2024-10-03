@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { login } from "../services/AuthService";
 
 export default {
   data() {
@@ -58,15 +58,11 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await axios.post("http://localhost:4000/login", {
-          correo: this.correo,
-          password: this.password,
-        });
-
-        if (response.data.token) {
+        const response = await login(this.correo, this.password);
+        if (response.token) {
           // Guardar el token y el nombre del usuario en localStorage
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("nombre", response.data.nombre);
+          localStorage.setItem("token", response.token);
+          localStorage.setItem("nombre", response.nombre);
 
           // Redirigir al dashboard si el login es exitoso
           this.$router.push("/Dashboard");
