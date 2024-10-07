@@ -22,6 +22,6 @@ app.get('/usuarios', userController.obtenerUsuarios);
 app.post('/login', AuthController.loginUsuario);
 app.post('/register', AuthController. registrarUsuario);
 app.post('/ingresos', ReceiptsController.createReceipts);
-app.get('/ingresos/:userId', ReceiptsController.getReceipsbyuser);
+app.get('/ingresos/:userid', ReceiptsController.getReceipsbyuser);
 
 module.exports = app;

@@ -35,3 +35,16 @@ export const receipts = async (monto, fuente, fecha, descripcion, userid) => {
     throw new Error("Error al registrar el ingreso");
   }
 };
+
+export const getReceiptsByUser = async (userid) => {
+  try {
+    const response = await axios.get(`${API_URL}ingresos/${userid}`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al obtener los ingresos:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error("Error al obtener los ingresos");
+  }
+};
