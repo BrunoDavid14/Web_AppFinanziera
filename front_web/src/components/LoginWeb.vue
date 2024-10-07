@@ -63,6 +63,7 @@ export default {
           // Guardar el token y el nombre del usuario en localStorage
           localStorage.setItem("token", response.token);
           localStorage.setItem("nombre", response.nombre);
+          localStorage.setItem("userID", response.userID);
 
           // Redirigir al dashboard si el login es exitoso
           this.$router.push("/Dashboard");

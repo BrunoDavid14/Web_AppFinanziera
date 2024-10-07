@@ -27,6 +27,11 @@
                 >Cerrar Sesión</a
               >
             </li>
+            <li>
+              <a class="dropdown-item" href="#" @click="GotoRegisterReceipts"
+                >Registrar Ingreso</a
+              >
+            </li>
           </ul>
         </li>
       </ul>
@@ -59,6 +64,9 @@ export default {
     perfil() {
       // Redirigir al perfil del usuario
       this.$router.push("/perfil");
+    },
+    GotoRegisterReceipts() {
+      this.$router.push("/receipts");
     },
     handleClickOutside(event) {
       const dropdown = this.$el.querySelector(".dropdown-menu");

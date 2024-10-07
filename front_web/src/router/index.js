@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import LoginView from "../views/LoginView.vue";
 import Dashboard from "../views/DashboardView.vue";
 import RegisterView from "../views/RegisterView.vue";
+import ReceiptsWeb from "../components/ReceiptsWeb.vue";
 
 const routes = [
   {
@@ -13,6 +14,11 @@ const routes = [
     path: "/register",
     name: "Register",
     component: RegisterView,
+  },
+  {
+    path: "/receipts",
+    name: "Receiptsr",
+    component: ReceiptsWeb,
   },
   {
     path: "/dashboard",

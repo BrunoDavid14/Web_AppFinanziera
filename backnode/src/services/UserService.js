@@ -9,7 +9,7 @@ async function hashearPassword(password) {
 }
 
 // Función para registrar un nuevo usuario
-async function registrarUsuario(nombre, correo, password) {
+async function registrarUsuario(nombre, correo, password, acceptpolicies) {
   const query = 'SELECT * FROM users WHERE correo = $1';
   const result = await db.query(query, [correo]);
 
@@ -19,8 +19,8 @@ async function registrarUsuario(nombre, correo, password) {
 
   const hashedPassword = await hashearPassword(password);
 
-  const insertQuery = 'INSERT INTO users (nombre, correo, password) VALUES ($1, $2, $3) RETURNING *';
-  const insertResult = await db.query(insertQuery, [nombre, correo, hashedPassword]);
+  const insertQuery = 'INSERT INTO users (nombre, correo, password, acceptpolicies) VALUES ($1, $2, $3, $4) RETURNING *';
+  const insertResult = await db.query(insertQuery, [nombre, correo, hashedPassword, acceptpolicies ? 1 : 0]);
   return insertResult.rows[0]; // Retorna el nuevo usuario
 }
 
@@ -44,7 +44,7 @@ async function loginUsuario(correo, password) {
     expiresIn: '1h',
   });
 
-  return { token, nombre: user.nombre }; // Retorna el token y el nombre
+  return { token, nombre: user.nombre, userID: user.userid };
 }
 
 module.exports = {
