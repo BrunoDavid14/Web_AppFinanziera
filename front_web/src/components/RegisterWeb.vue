@@ -65,8 +65,13 @@
               Acepto las <a>políticas de privacidad</a>
             </label>
           </div>
-
-          <button type="submit" class="btn btn-primary">Registrarse</button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            :disabled="!isFormValid"
+          >
+            Registrarse
+          </button>
         </form>
 
         <div class="mt-3">
@@ -95,6 +100,18 @@ export default {
       error: "",
     };
   },
+  computed: {
+    isFormValid() {
+      // Verifica que todos los campos estén llenos y las políticas aceptadas
+      return (
+        this.nombre &&
+        this.correo &&
+        this.password &&
+        this.confirmPassword &&
+        this.acceptpolicies
+      );
+    },
+  },
   methods: {
     async register() {
       // Validación del formato de correo electrónico
@@ -119,12 +136,6 @@ export default {
         return;
       }
 
-      // Verificar si aceptó las políticas
-      if (!this.acceptpolicies) {
-        this.error = "Debes aceptar las políticas de privacidad.";
-        return;
-      }
-
       try {
         const response = await register(
           this.nombre,
@@ -138,7 +149,7 @@ export default {
         this.$router.push("/login");
       } catch (error) {
         this.error = "Error durante el registro. Verifica los datos.";
-        console.error(error); // Muestra el error en la consola para depuración
+        console.error(error);
       }
     },
   },
@@ -146,19 +157,12 @@ export default {
 </script>
 
 <style>
-.register-container {
-  height: 100vh;
-  background: url("https://cdn.pixabay.com/photo/2014/07/06/13/55/calculator-385506_1280.jpg")
-    no-repeat center center fixed;
-  background-size: cover;
-}
-
 .card {
   width: 400px;
-  background-color: #f4a261;
-  border-radius: 10px;
+  background-color: #fafafa; /* Color de fondo */
+  border-radius: 0; /* Elimina el borde redondeado */
+  box-shadow: none; /* Elimina la sombra */
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-primary {
@@ -167,7 +171,11 @@ export default {
   width: 100%;
 }
 
-.btn-primary:hover {
+.btn-primary:disabled {
+  background-color: #cccccc;
+}
+
+.btn-primary:hover:enabled {
   background-color: #0056b3;
 }
 

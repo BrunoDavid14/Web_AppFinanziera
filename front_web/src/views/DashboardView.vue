@@ -1,5 +1,7 @@
 <template>
-  <DashboardLayout> </DashboardLayout>
+  <DashboardLayout>
+    <router-view />
+  </DashboardLayout>
 </template>
 
 <script setup>

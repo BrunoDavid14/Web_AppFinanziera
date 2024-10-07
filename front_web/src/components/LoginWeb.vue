@@ -31,7 +31,14 @@
             />
           </div>
 
-          <button type="submit" class="btn btn-danger">Iniciar Sesión</button>
+          <!-- El botón estará deshabilitado si correo o password están vacíos -->
+          <button
+            type="submit"
+            class="btn btn-primary"
+            :disabled="!correo || !password"
+          >
+            Iniciar Sesión
+          </button>
         </form>
 
         <div class="mt-3">
@@ -80,29 +87,26 @@ export default {
 </script>
 
 <style>
-.login-container {
-  height: 100vh;
-  background: url("https://cdn.pixabay.com/photo/2022/10/23/15/20/online-banking-7541521_1280.jpg")
-    no-repeat center center fixed;
-  background-size: cover;
-}
-
 .card {
   width: 400px;
-  background-color: #f4a261;
+  background-color: #f4f4f4;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.btn-danger {
-  background-color: #d9534f;
+.btn-primary {
+  background-color: #007bff;
   border: none;
   width: 100%;
 }
 
-.btn-danger:hover {
-  background-color: #c9302c;
+.btn-primary:disabled {
+  background-color: #cccccc; /* Botón deshabilitado gris */
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
 }
 
 .form-control {
