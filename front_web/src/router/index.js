@@ -3,6 +3,7 @@ import LoginView from "../views/LoginView.vue";
 import Dashboard from "../views/DashboardView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import ReceiptsView from "../views/ReceiptsView.vue";
+import GetReceiptsView from "../views/GetReceiptsView.vue";
 
 const routes = [
   {
@@ -19,6 +20,12 @@ const routes = [
     path: "/receipts",
     name: "Receipts",
     component: ReceiptsView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/receiptsid",
+    name: "Receiptsid",
+    component: GetReceiptsView,
     meta: { requiresAuth: true },
   },
   {
