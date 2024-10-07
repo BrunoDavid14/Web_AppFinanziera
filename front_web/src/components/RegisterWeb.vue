@@ -53,6 +53,19 @@
             />
           </div>
 
+          <div class="form-check mb-3">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="acceptpolicies"
+              v-model="acceptpolicies"
+              required
+            />
+            <label class="form-check-label" for="acceptpolicies">
+              Acepto las <a>políticas de privacidad</a>
+            </label>
+          </div>
+
           <button type="submit" class="btn btn-primary">Registrarse</button>
         </form>
 
@@ -78,6 +91,7 @@ export default {
       correo: "",
       password: "",
       confirmPassword: "",
+      acceptpolicies: false,
       error: "",
     };
   },
@@ -105,11 +119,18 @@ export default {
         return;
       }
 
+      // Verificar si aceptó las políticas
+      if (!this.acceptpolicies) {
+        this.error = "Debes aceptar las políticas de privacidad.";
+        return;
+      }
+
       try {
         const response = await register(
           this.nombre,
           this.correo,
-          this.password
+          this.password,
+          this.acceptpolicies
         );
         console.log("Registro exitoso:", response.data);
 
