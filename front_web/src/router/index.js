@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import LoginView from "../views/LoginView.vue";
 import Dashboard from "../views/DashboardView.vue";
 import RegisterView from "../views/RegisterView.vue";
-import ReceiptsWeb from "../components/ReceiptsWeb.vue";
+import ReceiptsView from "../views/ReceiptsView.vue";
 
 const routes = [
   {
@@ -17,8 +17,9 @@ const routes = [
   },
   {
     path: "/receipts",
-    name: "Receiptsr",
-    component: ReceiptsWeb,
+    name: "Receipts",
+    component: ReceiptsView,
+    meta: { requiresAuth: true },
   },
   {
     path: "/dashboard",

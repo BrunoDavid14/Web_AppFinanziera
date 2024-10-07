@@ -1,10 +1,12 @@
 <template>
   <div class="login">
-    <RegisterWeb msg="Welcome to Your Vue.js App" />
+    <AuthLayout>
+      <RegisterWeb />
+    </AuthLayout>
   </div>
 </template>
 
 <script setup>
-// @ is an alias to /src
 import RegisterWeb from "@/components/RegisterWeb.vue";
+import AuthLayout from "@/layouts/AuthLayout.vue";
 </script>
