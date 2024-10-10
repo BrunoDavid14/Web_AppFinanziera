@@ -35,3 +35,28 @@ export const receipts = async (monto, fuente, fecha, descripcion, userid) => {
     throw new Error("Error al registrar el ingreso");
   }
 };
+
+export const expenses = async (
+  monto,
+  categoria,
+  fecha,
+  descripcion,
+  userid
+) => {
+  try {
+    const response = await axios.post(`${API_URL}gastos`, {
+      monto,
+      categoria,
+      fecha,
+      descripcion,
+      userid,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al hacer la solicitud:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error("Error al registrar el gasto");
+  }
+};

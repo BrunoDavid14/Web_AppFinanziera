@@ -3,6 +3,7 @@ import LoginView from "../views/LoginView.vue";
 import Dashboard from "../views/DashboardView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import ReceiptsWeb from "../components/ReceiptsWeb.vue";
+import ExpensesWeb from "../components/ExpensesWeb.vue";
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     name: "Dashboard",
     component: Dashboard,
     meta: { requiresAuth: true },
+  },
+  {
+    path: "/expenses",
+    name: "Expenses",
+    component: ExpensesWeb,
   },
 ];
 
