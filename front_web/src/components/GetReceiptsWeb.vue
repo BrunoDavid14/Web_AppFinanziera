@@ -9,18 +9,15 @@
       <ul v-if="receipts.length > 0" class="ingresos-list">
         <li v-for="receipt in receipts" :key="receipt.id" class="ingreso-item">
           <div class="ingreso-card">
-            <!-- Imagen del ingreso -->
             <img src="@/assets/images.png" alt="Ingreso" class="income-image" />
-
-            <!-- Detalles del ingreso -->
             <div class="ingreso-details">
-              <p class="amount">Monto: ${{ formatMonto(receipt.monto) }}</p>
-              <p>Descripción: {{ receipt.descripcion }}</p>
-              <p>Fecha: {{ formatDate(receipt.fecha) }}</p>
               <p>
-                Fuente de ingreso:
-                {{ receipt.fuente_nombre || "Fuente desconocida" }}
+                <strong>Monto:</strong>
+                <span class="amount">${{ formatMonto(receipt.monto) }}</span>
               </p>
+              <p><strong>Descripción:</strong> {{ receipt.descripcion }}</p>
+              <p><strong>Fecha:</strong> {{ formatDate(receipt.fecha) }}</p>
+              <p><strong>Fuente del Ingreso:</strong> {{ receipt.fuente }}</p>
             </div>
           </div>
         </li>
@@ -35,10 +32,10 @@
           Total de Ingresos:
           <span class="total-amount">${{ formatMonto(totalIngresos()) }}</span>
         </p>
+        <button type="button" @click="goToDashboard" class="btn btn-primary">
+          Regresar al Dashboard
+        </button>
       </div>
-      <button type="button" @click="goToDashboard" class="btn btn-primary">
-        Regresar al Dashboard
-      </button>
     </div>
   </div>
 </template>
@@ -91,11 +88,9 @@ export default {
 
     // Método para calcular el total de ingresos
     totalIngresos() {
-      return this.receipts
-        .reduce((total, receipt) => {
-          return total + parseFloat(receipt.monto);
-        }, 0)
-        .toFixed(2);
+      return this.receipts.reduce((total, receipt) => {
+        return total + parseFloat(receipt.monto);
+      }, 0);
     },
   },
 };
@@ -104,20 +99,17 @@ export default {
 <style scoped>
 .page-wrapper {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  height: 100vh; /* Ocupar el 100% de la pantalla */
+  min-height: 100vh; /* Asegura que el contenido esté centrado verticalmente */
 }
 
 .container {
   max-width: 900px;
   padding: 30px;
-  background-color: #dee0e0;
+  background-color: #dee0e0; /* Fondo del contenedor */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  flex: 1; /* Flexibilidad para ocupar espacio disponible */
-  overflow-y: auto;
 }
 
 h1 {
@@ -179,7 +171,7 @@ h1 {
 }
 
 .total-ingresos {
-  margin-top: auto;
+  margin-top: 20px;
   font-size: 1.5em;
   text-align: center;
   background-color: #ecf0f1;
