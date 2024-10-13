@@ -21,16 +21,19 @@ async function createReceipts (monto, fuenteid, fecha, descripcion, userid) {
     }
 }
 
-async function  getReceipsbyuser (userid) {
-    try {
-        const result = await db.query(
-            'SELECT * FROM Ingresos WHERE Userid = $1',
-            [userid]
-        );
-        return result.rows;
-    } catch (error) {
-        throw new Error('Error al obtener los ingresos');
-    }
+async function getReceipsbyuser(userid) {
+  try {
+      const result = await db.query(
+          `SELECT i.*, f.nombre AS fuente_nombre
+           FROM Ingresos i
+           JOIN Fuentes f ON i.fuenteid = f.id
+           WHERE i.Userid = $1`,
+          [userid]
+      );
+      return result.rows;
+  } catch (error) {
+      throw new Error('Error al obtener los ingresos');
+  }
 }
 
 module.exports = {

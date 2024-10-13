@@ -8,6 +8,11 @@
         <p>Monto: {{ receipt.monto }}</p>
         <p>Descripción: {{ receipt.descripcion }}</p>
         <p>Fecha: {{ formatDate(receipt.fecha) }}</p>
+        <p>
+          Fuente de ingreso:
+          {{ receipt.fuente_nombre || "Fuente desconocida" }}
+        </p>
+        <!-- Mostrar el nombre de la fuente -->
       </li>
     </ul>
     <div v-else>No hay ingresos disponibles.</div>
