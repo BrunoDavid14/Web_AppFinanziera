@@ -5,6 +5,12 @@
 
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
+          <a class="nav-link" href="#" @click="GotoExpenses">Mis Gastos</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
           <a class="nav-link" href="#" @click="GotoReceipts">Mis Ingresos</a>
         </li>
       </ul>
@@ -31,6 +37,11 @@
             <li>
               <a class="dropdown-item" href="#" @click="GotoRegisterReceipts"
                 >Registrar Ingreso</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" @click="GotoRegisterExpenses"
+                >Registrar Gasto</a
               >
             </li>
             <li>
@@ -74,8 +85,14 @@ export default {
     GotoRegisterReceipts() {
       this.$router.push("/receipts");
     },
+    GotoRegisterExpenses() {
+      this.$router.push("/expenses");
+    },
     GotoReceipts() {
       this.$router.push("/receiptsid");
+    },
+    GotoExpenses() {
+      this.$router.push("/expensesid");
     },
     handleClickOutside(event) {
       const dropdown = this.$el.querySelector(".dropdown-menu");
