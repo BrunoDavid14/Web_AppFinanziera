@@ -1,75 +1,80 @@
 <template>
-  <div
-    class="expenses-container d-flex align-items-center justify-content-center"
-  >
-    <div class="capsule">
-      <div class="text-center mb-3">
-        <button @click="goToDashboard" class="btn btn-secondary">
-          Regresar al Dashboard
-        </button>
-      </div>
-      <h2>Registrar Gasto</h2>
-      <form @submit.prevent="RecordExpense">
-        <div class="mb-3">
-          <label for="monto" class="form-label">Monto</label>
-          <input
-            type="number"
-            v-model="gasto.monto"
-            class="form-control"
-            id="monto"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="categoria" class="form-label">Categoría</label>
-          <input
-            type="text"
-            v-model="gasto.categoria"
-            class="form-control"
-            id="categoria"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="fecha" class="form-label">Fecha</label>
-          <input
-            type="date"
-            v-model="gasto.fecha"
-            class="form-control"
-            id="fecha"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="descripcion" class="form-label">Descripción</label>
-          <textarea
-            v-model="gasto.descripcion"
-            class="form-control"
-            id="descripcion"
-          ></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Registrar Gasto</button>
-      </form>
+  <div class="container">
+    <div class="text-center mb-3">
+      <button type="button" @click="goToDashboard" class="btn btn-secondary">
+        Regresar al Dashboard
+      </button>
     </div>
+    <h2>Registrar Gasto</h2>
+    <form @submit.prevent="RecordExpenses">
+      <div class="mb-3">
+        <label for="monto" class="form-label">Monto</label>
+        <input
+          type="number"
+          v-model="gasto.monto"
+          class="form-control"
+          id="monto"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="categoria" class="form-label">Categoria del gasto</label>
+        <select
+          v-model="gasto.categoriaid"
+          class="form-control"
+          id="categoria"
+          required
+        >
+          <option value="" disabled>Seleccione una categoria</option>
+          <option
+            v-for="categoria in categorias"
+            :key="categoria.id"
+            :value="categoria.id"
+          >
+            {{ categoria.nombre }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="fecha" class="form-label">Fecha</label>
+        <input
+          type="date"
+          v-model="gasto.fecha"
+          class="form-control"
+          id="fecha"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <textarea
+          v-model="gasto.descripcion"
+          class="form-control"
+          id="descripcion"
+        ></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Registrar Gasto</button>
+    </form>
   </div>
 </template>
 
 <script>
-import { expenses } from "../services/AuthService";
+import { expenses, GetSources } from "../services/AuthService";
 
 export default {
   data() {
     return {
       gasto: {
         monto: "",
-        categoria: "",
+        categoriaid: "",
         fecha: "",
         descripcion: "",
       },
+      categorias: [],
     };
   },
   methods: {
-    async RecordExpense() {
+    async RecordExpenses() {
       const token = localStorage.getItem("token");
       const userid = localStorage.getItem("userID");
       if (!token || !userid) {
@@ -79,7 +84,7 @@ export default {
       try {
         await expenses(
           this.gasto.monto,
-          this.gasto.categoria,
+          this.gasto.categoriaid,
           this.gasto.fecha,
           this.gasto.descripcion,
           userid
@@ -87,82 +92,70 @@ export default {
         alert("Gasto registrado correctamente");
         this.clearForm();
       } catch (error) {
+        console.error("Detalles del error:", error);
         alert("Error al registrar el gasto");
       }
     },
+    async fetchSources() {
+      try {
+        this.categorias = await GetSources();
+      } catch (error) {
+        alert("Error al cargar las categorias de gasto");
+      }
+    },
     clearForm() {
-      this.gasto = { monto: "", categoria: "", fecha: "", descripcion: "" };
+      this.gasto = {
+        monto: "",
+        categoriaid: "",
+        fecha: "",
+        descripcion: "",
+      };
     },
     goToDashboard() {
       this.$router.push({ path: "/Dashboard" });
     },
   },
+  mounted() {
+    this.fetchSources();
+  },
 };
 </script>
 
 <style scoped>
-.expenses-container {
-  height: 100vh;
-  background: url("https://www.bbva.com/wp-content/uploads/2015/12/bbva-finanzas-3-1920x1080.jpg")
-    no-repeat center center fixed;
-  background-size: cover;
-}
-
-.capsule {
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.9),
-    rgba(245, 245, 245, 0.8)
-  );
-  padding: 30px;
-  border-radius: 25px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+.container {
   max-width: 600px;
-  width: 100%;
-  text-align: center;
-}
-
-/* Estilo de los labels (nombres de los campos) */
-label {
-  font-weight: bold;
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 8px;
-}
-
-/* Estilo de los inputs y textarea */
-input,
-textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 12px;
-  border: 2px solid #ddd;
-  font-size: 16px;
-  transition: border-color 0.3s ease;
-}
-
-/* Efecto hover y focus en los inputs */
-input:focus,
-textarea:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-/* Botón estilizado */
-button {
-  background-color: #bd0000;
-  color: white;
-  padding: 12px 25px;
-  border: none;
+  padding: 30px;
+  background-color: #ffffff;
   border-radius: 10px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: auto; /* Centra la cápsula en la página */
 }
 
-/* Hover para el botón */
-button:hover {
-  background-color: #009fc7;
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #2980b9;
 }
 </style>
