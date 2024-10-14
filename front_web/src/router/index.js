@@ -4,6 +4,8 @@ import Dashboard from "../views/DashboardView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import ReceiptsView from "../views/ReceiptsView.vue";
 import GetReceiptsView from "../views/GetReceiptsView.vue";
+import ExpensesView from "@/views/ExpensesView.vue";
+import GetExpensesView from "@/views/GetExpensesView.vue";
 
 const routes = [
   {
@@ -26,6 +28,18 @@ const routes = [
     path: "/receiptsid",
     name: "Receiptsid",
     component: GetReceiptsView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/expenses",
+    name: "Expenses",
+    component: ExpensesView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/expensesid",
+    name: "Expensesid",
+    component: GetExpensesView,
     meta: { requiresAuth: true },
   },
   {

@@ -61,3 +61,54 @@ export const getReceiptsByUser = async (userid) => {
     throw new Error("Error al obtener los ingresos");
   }
 };
+
+export const expenses = async (
+  monto,
+  categoriaid,
+  fecha,
+  descripcion,
+  userid
+) => {
+  try {
+    const response = await axios.post(`${API_URL}gastos`, {
+      monto,
+      categoriaid,
+      fecha,
+      descripcion,
+      userid,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al hacer la solicitud:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error("Error al registrar el gasto");
+  }
+};
+
+export const GetSources = async () => {
+  try {
+    const response = await axios.get(`${API_URL}categorias`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al obtener las categorias:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error("Error al obtener las categorias de gasto");
+  }
+};
+
+export const getExpensesByUser = async (userid) => {
+  try {
+    const response = await axios.get(`${API_URL}gastos/${userid}`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al obtener los gastos:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error("Error al obtener los gastos");
+  }
+};
