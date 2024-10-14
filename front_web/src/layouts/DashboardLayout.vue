@@ -15,6 +15,12 @@
         </li>
       </ul>
 
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" @click="GotoBudget">Mi Presupuesto</a>
+        </li>
+      </ul>
+
       <ul class="navbar-nav ms-auto">
         <li class="nav-item dropdown">
           <a
@@ -93,6 +99,9 @@ export default {
     },
     GotoExpenses() {
       this.$router.push("/expensesid");
+    },
+    GotoBudget() {
+      this.$router.push("/budget");
     },
     handleClickOutside(event) {
       const dropdown = this.$el.querySelector(".dropdown-menu");
