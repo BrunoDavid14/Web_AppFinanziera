@@ -8,23 +8,30 @@
       <ul v-if="expenses.length > 0" class="gastos-list">
         <li v-for="expense in expenses" :key="expense.id" class="gasto-item">
           <div class="gasto-card">
+            <!-- Imagen del gasto -->
+            <img
+              src="@/assets/gastoimg.png"
+              alt="Gasto"
+              class="expense-image"
+            />
+
             <div class="gasto-details">
               <p class="amount">Monto: ${{ formatMonto(expense.monto) }}</p>
               <p>Descripción: {{ expense.descripcion }}</p>
               <p>Fecha: {{ formatDate(expense.fecha) }}</p>
               <p>
-                Fuente de gasto:
-                {{ expense.categoria_nombre || "Fuente desconocida" }}
+                Categoría de gasto:
+                {{ expense.categoria_nombre || "Categoría desconocida" }}
               </p>
             </div>
           </div>
         </li>
       </ul>
 
-      <!-- Mensaje cuando no hay ingresos -->
+      <!-- Mensaje cuando no hay gastos -->
       <div v-else class="no-gastos">No hay gastos disponibles.</div>
 
-      <!-- Mostrar el total de ingresos si hay ingresos -->
+      <!-- Mostrar el total de gastos si hay gastos -->
       <div v-if="expenses.length > 0" class="total-gastos">
         <p>
           Total de Gastos:
@@ -84,7 +91,7 @@ export default {
       this.$router.push("/dashboard"); // Redirecciona a la ruta del Dashboard
     },
 
-    // Método para calcular el total de ingresos
+    // Método para calcular el total de gastos
     totalGastos() {
       return this.expenses
         .reduce((total, expense) => {
@@ -96,4 +103,115 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh; /* Ocupar el 100% de la pantalla */
+}
+
+.container {
+  max-width: 900px;
+  padding: 30px;
+  background-color: #dee0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex: 1; /* Flexibilidad para ocupar espacio disponible */
+  overflow-y: auto;
+}
+
+h1 {
+  font-size: 2.5em;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.5em;
+  color: #7f8c8d; /* Color gris para loading */
+}
+
+.error {
+  color: #e74c3c; /* Color rojo para errores */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.gastos-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.gasto-item {
+  margin-bottom: 20px;
+}
+
+.gasto-card {
+  background-color: #c8fafa; /* Color similar al de ingresos */
+  border: 1px solid #bdc3c7;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.gasto-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.expense-image {
+  width: 60px; /* Ajusta el tamaño de la imagen si es necesario */
+  height: 60px; /* Ajusta el tamaño de la imagen si es necesario */
+  margin-right: 15px;
+}
+
+.gasto-details {
+  flex: 1;
+}
+
+.amount {
+  font-weight: bold;
+  color: #27ae60; /* Color para el monto */
+}
+
+.total-gastos {
+  margin-top: auto;
+  font-size: 1.5em;
+  text-align: center;
+  background-color: #ecf0f1;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.total-amount {
+  font-weight: bold;
+  color: #2980b9; /* Color para el total */
+}
+
+.no-gastos {
+  text-align: center;
+  font-size: 1.2em;
+  color: #7f8c8d; /* Color gris para no hay gastos */
+}
+
+.btn-primary {
+  display: block;
+  margin: 30px auto;
+  background-color: #3498db;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+}
+</style>
