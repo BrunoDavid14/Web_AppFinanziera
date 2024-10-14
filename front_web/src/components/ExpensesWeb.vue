@@ -121,41 +121,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.container {
-  max-width: 600px;
-  padding: 30px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: auto; /* Centra la cápsula en la página */
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.form-control {
-  width: 100%;
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #bdc3c7;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.btn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background-color: #2980b9;
-}
-</style>
+<style scoped></style>

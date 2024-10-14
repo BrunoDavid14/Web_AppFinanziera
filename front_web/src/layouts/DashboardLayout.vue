@@ -1,7 +1,19 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Finanzas_Web</a>
+      <a class="navbar-brand">Finanzas_Web</a>
+
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" @click="GotoExpenses">Mis Gastos</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" @click="GotoReceipts">Mis Ingresos</a>
+        </li>
+      </ul>
 
       <ul class="navbar-nav ms-auto">
         <li class="nav-item dropdown">
@@ -23,13 +35,18 @@
               <a class="dropdown-item" href="#" @click="perfil">Mi perfil</a>
             </li>
             <li>
-              <a class="dropdown-item" href="#" @click="logout"
-                >Cerrar Sesión</a
+              <a class="dropdown-item" href="#" @click="GotoRegisterReceipts"
+                >Registrar Ingreso</a
               >
             </li>
             <li>
-              <a class="dropdown-item" href="#" @click="GotoRegisterReceipts"
-                >Registrar Ingreso</a
+              <a class="dropdown-item" href="#" @click="GotoRegisterExpenses"
+                >Registrar Gasto</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" @click="logout"
+                >Cerrar Sesión</a
               >
             </li>
           </ul>
@@ -67,6 +84,15 @@ export default {
     },
     GotoRegisterReceipts() {
       this.$router.push("/receipts");
+    },
+    GotoRegisterExpenses() {
+      this.$router.push("/expenses");
+    },
+    GotoReceipts() {
+      this.$router.push("/receiptsid");
+    },
+    GotoExpenses() {
+      this.$router.push("/expensesid");
     },
     handleClickOutside(event) {
       const dropdown = this.$el.querySelector(".dropdown-menu");

@@ -2,8 +2,10 @@ import { createRouter, createWebHistory } from "vue-router";
 import LoginView from "../views/LoginView.vue";
 import Dashboard from "../views/DashboardView.vue";
 import RegisterView from "../views/RegisterView.vue";
-import ReceiptsWeb from "../components/ReceiptsWeb.vue";
-import ExpensesWeb from "../components/ExpensesWeb.vue";
+import ReceiptsView from "../views/ReceiptsView.vue";
+import GetReceiptsView from "../views/GetReceiptsView.vue";
+import ExpensesView from "@/views/ExpensesView.vue";
+import GetExpensesView from "@/views/GetExpensesView.vue";
 
 const routes = [
   {
@@ -18,19 +20,33 @@ const routes = [
   },
   {
     path: "/receipts",
-    name: "Receiptsr",
-    component: ReceiptsWeb,
+    name: "Receipts",
+    component: ReceiptsView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/receiptsid",
+    name: "Receiptsid",
+    component: GetReceiptsView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/expenses",
+    name: "Expenses",
+    component: ExpensesView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/expensesid",
+    name: "Expensesid",
+    component: GetExpensesView,
+    meta: { requiresAuth: true },
   },
   {
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
     meta: { requiresAuth: true },
-  },
-  {
-    path: "/expenses",
-    name: "Expenses",
-    component: ExpensesWeb,
   },
 ];
 
