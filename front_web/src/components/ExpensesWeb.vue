@@ -5,29 +5,33 @@
         Regresar al Dashboard
       </button>
     </div>
-    <h2>Registrar Ingreso</h2>
-    <form @submit.prevent="RecordReceipts">
+    <h2>Registrar Gasto</h2>
+    <form @submit.prevent="RecordExpenses">
       <div class="mb-3">
         <label for="monto" class="form-label">Monto</label>
         <input
           type="number"
-          v-model="ingreso.monto"
+          v-model="gasto.monto"
           class="form-control"
           id="monto"
           required
         />
       </div>
       <div class="mb-3">
-        <label for="fuente" class="form-label">Fuente del Ingreso</label>
+        <label for="categoria" class="form-label">Categoria del gasto</label>
         <select
-          v-model="ingreso.fuenteid"
+          v-model="gasto.categoriaid"
           class="form-control"
-          id="fuente"
+          id="categoria"
           required
         >
-          <option value="" disabled>Seleccione una fuente</option>
-          <option v-for="fuente in fuentes" :key="fuente.id" :value="fuente.id">
-            {{ fuente.nombre }}
+          <option value="" disabled>Seleccione una categoria</option>
+          <option
+            v-for="categoria in categorias"
+            :key="categoria.id"
+            :value="categoria.id"
+          >
+            {{ categoria.nombre }}
           </option>
         </select>
       </div>
@@ -35,7 +39,7 @@
         <label for="fecha" class="form-label">Fecha</label>
         <input
           type="date"
-          v-model="ingreso.fecha"
+          v-model="gasto.fecha"
           class="form-control"
           id="fecha"
           required
@@ -44,33 +48,33 @@
       <div class="mb-3">
         <label for="descripcion" class="form-label">Descripción</label>
         <textarea
-          v-model="ingreso.descripcion"
+          v-model="gasto.descripcion"
           class="form-control"
           id="descripcion"
         ></textarea>
       </div>
-      <button type="submit" class="btn btn-primary">Registrar Ingreso</button>
+      <button type="submit" class="btn btn-primary">Registrar Gasto</button>
     </form>
   </div>
 </template>
 
 <script>
-import { receipts, getSources } from "../services/AuthService";
+import { expenses, GetSources } from "../services/AuthService";
 
 export default {
   data() {
     return {
-      ingreso: {
+      gasto: {
         monto: "",
-        fuenteid: "",
+        categoriaid: "",
         fecha: "",
         descripcion: "",
       },
-      fuentes: [], // Lista para almacenar las fuentes obtenidas del backend
+      categorias: [],
     };
   },
   methods: {
-    async RecordReceipts() {
+    async RecordExpenses() {
       const token = localStorage.getItem("token");
       const userid = localStorage.getItem("userID");
       if (!token || !userid) {
@@ -78,31 +82,31 @@ export default {
         return;
       }
       try {
-        await receipts(
-          this.ingreso.monto,
-          this.ingreso.fuenteid,
-          this.ingreso.fecha,
-          this.ingreso.descripcion,
+        await expenses(
+          this.gasto.monto,
+          this.gasto.categoriaid,
+          this.gasto.fecha,
+          this.gasto.descripcion,
           userid
         );
-        alert("Ingreso registrado correctamente");
-        this.clearForm(); // Limpiar el formulario después de la alerta
+        alert("Gasto registrado correctamente");
+        this.clearForm();
       } catch (error) {
-        console.error("Detalles del error:", error); // Muestra los detalles del error en la consola
-        alert("Error al registrar el ingreso");
+        console.error("Detalles del error:", error);
+        alert("Error al registrar el gasto");
       }
     },
     async fetchSources() {
       try {
-        this.fuentes = await getSources(); // Obtener fuentes desde el servicio
+        this.categorias = await GetSources();
       } catch (error) {
-        alert("Error al cargar las fuentes de ingreso");
+        alert("Error al cargar las categorias de gasto");
       }
     },
     clearForm() {
-      this.ingreso = {
+      this.gasto = {
         monto: "",
-        fuenteid: "",
+        categoriaid: "",
         fecha: "",
         descripcion: "",
       };
@@ -112,42 +116,19 @@ export default {
     },
   },
   mounted() {
-    this.fetchSources(); // Cargar fuentes al montar el componente
+    this.fetchSources();
   },
 };
 </script>
 
 <style scoped>
-.page-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh; /* Asegura que la altura ocupe todo el viewport */
-}
-
 .container {
   max-width: 600px;
   padding: 30px;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: relative; /* Necesario para el posicionamiento absoluto de la imagen */
-}
-
-input[type="date"]:hover {
-  background-color: #f0f0f0; /* Fondo más oscuro */
-  border-color: #2980b9; /* Borde más oscuro */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Añade sombra */
-  transition: background-color 0.3s ease, border-color 0.3s ease; /* Transición suave */
-}
-
-/* Estilo para la imagen en la esquina superior derecha */
-.corner-image {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 80px; /* Ajusta el tamaño según lo que necesites */
-  height: auto;
+  margin: auto; /* Centra la cápsula en la página */
 }
 
 h2 {

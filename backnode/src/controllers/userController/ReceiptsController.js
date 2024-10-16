@@ -1,15 +1,20 @@
 // IngresosController.js
 const IngresosService = require('../../services/ReceiptsService');
 
-// Crear un nuevo ingreso
-async function createReceipts (req, res) {
-    const { monto, fuente, fecha, descripcion, userid } = req.body;
-    try {
-        await IngresosService.createReceipts(monto, fuente, fecha, descripcion, userid);
-        res.status(201).json({ message: 'Ingreso creado exitosamente' });
-    } catch (error) {
-        res.status(500).json({ error: 'Error al crear el ingreso' });
-    }
+async function createReceipts(req, res) {
+  const { monto, fuenteid, fecha, descripcion, userid } = req.body;
+  try {
+      // Verifica que la fuente de ingreso exista
+      const fuenteExiste = await IngresosService.checkSourceExists(fuenteid);
+      if (!fuenteExiste) {
+          return res.status(400).json({ error: 'La fuente de ingreso no existe' });
+      }
+
+      await IngresosService.createReceipts(monto, fuenteid, fecha, descripcion, userid);
+      res.status(201).json({ message: 'Ingreso creado exitosamente' });
+  } catch (error) {
+      res.status(500).json({ error: 'Error al crear el ingreso' });
+  }
 }
 
 // Obtener todos los ingresos de un usuario
