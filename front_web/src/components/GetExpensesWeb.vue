@@ -120,6 +120,8 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   flex: 1; /* Flexibilidad para ocupar espacio disponible */
   overflow-y: auto;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 h1 {
