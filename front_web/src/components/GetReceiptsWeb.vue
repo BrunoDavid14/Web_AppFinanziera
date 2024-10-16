@@ -118,6 +118,8 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   flex: 1; /* Flexibilidad para ocupar espacio disponible */
   overflow-y: auto;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 h1 {
@@ -148,7 +150,7 @@ h1 {
 }
 
 .ingreso-card {
-  background-color: #c8fafa;
+  background-color: #ffffff;
   border: 1px solid #bdc3c7;
   padding: 20px;
   border-radius: 10px;
