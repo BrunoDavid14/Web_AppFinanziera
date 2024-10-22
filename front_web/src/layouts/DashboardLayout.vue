@@ -128,14 +128,17 @@ export default {
 <style>
 /* Estilo para la barra de navegación */
 .navbar {
-  background-color: #f8f9fa; /* Fondo claro */
-  padding: 10px 20px; /* Espaciado interior */
+  background-color: #f8f9fa;
+  /* Fondo claro */
+  padding: 10px 20px;
+  /* Espaciado interior */
 }
 
 .navbar-brand {
   font-weight: bold;
   font-size: 1.5rem;
-  color: #2c3e50; /* Color oscuro para el logo */
+  color: #2c3e50;
+  /* Color oscuro para el logo */
 }
 
 .nav-link {
@@ -146,7 +149,8 @@ export default {
 }
 
 .nav-link:hover {
-  color: #3498db; /* Cambia a azul en hover */
+  color: #3498db;
+  /* Cambia a azul en hover */
 }
 
 .navbar-nav .dropdown-menu {
@@ -169,7 +173,8 @@ export default {
 }
 
 .dropdown-menu.show {
-  display: block !important; /* Asegura que el menú se muestre cuando visible */
+  display: block !important;
+  /* Asegura que el menú se muestre cuando visible */
 }
 
 /* Para pantallas pequeñas */

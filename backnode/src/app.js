@@ -1,5 +1,3 @@
-// En app.js
-
 const express = require('express');
 const config = require('./config');
 const cors = require('cors');
@@ -25,7 +23,7 @@ app.use(express.json());
 app.post('/usuarios', userController.guardarUsuario);
 app.get('/usuarios', userController.obtenerUsuarios);
 app.post('/login', AuthController.loginUsuario);
-app.post('/register', AuthController. registrarUsuario);
+app.post('/register', AuthController.registrarUsuario);
 app.post('/ingresos', ReceiptsController.createReceipts);
 app.get('/ingresos/:userid', ReceiptsController.getReceipsbyuser);
 app.get('/fuentes', FuentesController.getSources);
@@ -35,7 +33,7 @@ app.get('/categorias', CategoriasController.GetSources);
 app.post('/budgetscreate', BudgetController.createBudget);
 app.get('/budgets', BudgetController.getAllBudgets);
 app.get('/budgets/:id', BudgetController.getBudgetById);
-app.post('/inversiones', InvestmentTrackingController.createInvestmentTracking);
-app.get('/inversiones/:userid', InvestmentTrackingController.getInvestmentsByUser);
+app.post('/investments', InvestmentTrackingController.createInvestmentTracking);
+app.get('/investments/:userid', InvestmentTrackingController.getInvestmentsByUser);
 
 module.exports = app;

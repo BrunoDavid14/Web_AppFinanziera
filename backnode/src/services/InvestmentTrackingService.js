@@ -17,9 +17,9 @@ async function getInvestmentsByUser(userid) {
     try {
         const result = await db.query(
             'SELECT * FROM SeguimientoInversion WHERE userid = $1',
-            [userid]
+            [userid]  // Usamos el userid para filtrar las inversiones del usuario
         );
-        return result.rows;
+        return result.rows;  // Retornamos las filas obtenidas
     } catch (error) {
         throw new Error('Error al obtener el seguimiento de inversiones');
     }

@@ -23,11 +23,13 @@ async function createInvestmentTracking(req, res) {
 
 // Obtener todos los registros de seguimiento de inversión de un usuario
 async function getInvestmentsByUser(req, res) {
-    const { userid } = req.params;
+    const { userid } = req.params; // Este debería obtener el userid de la URL
+    
     try {
         const investments = await InvestmentTrackingService.getInvestmentsByUser(userid);
-        res.json(investments);
+        res.json(investments); // Enviar las inversiones como respuesta
     } catch (error) {
+        console.error("Error al obtener el seguimiento de inversiones:", error);
         res.status(500).json({ error: 'Error al obtener el seguimiento de inversiones' });
     }
 }
