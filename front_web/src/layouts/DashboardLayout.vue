@@ -21,6 +21,14 @@
         </li>
       </ul>
 
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" @click="GotoInvestments"
+            >Mis Inversiones</a
+          >
+        </li>
+      </ul>
+
       <ul class="navbar-nav ms-auto">
         <li class="nav-item dropdown">
           <a
@@ -102,6 +110,9 @@ export default {
     },
     GotoBudget() {
       this.$router.push("/budget");
+    },
+    GotoInvestments() {
+      this.$router.push("/investments");
     },
     handleClickOutside(event) {
       const dropdown = this.$el.querySelector(".dropdown-menu");
