@@ -7,6 +7,7 @@ import GetReceiptsView from "../views/GetReceiptsView.vue";
 import ExpensesView from "@/views/ExpensesView.vue";
 import GetExpensesView from "@/views/GetExpensesView.vue";
 import BudgetView from "@/views/BudgetView.vue";
+import InvestmentView from "../views/InvestmentView.vue";
 
 const routes = [
   {
@@ -47,6 +48,12 @@ const routes = [
     path: "/budget",
     name: "Budget",
     component: BudgetView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/investments",
+    name: "Investments",
+    component: InvestmentView,
     meta: { requiresAuth: true },
   },
   {

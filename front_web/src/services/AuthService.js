@@ -142,3 +142,35 @@ export const getBudgetById = async (id) => {
     throw error;
   }
 };
+
+export const createInvestment = async (investmentData) => {
+  try {
+    const response = await axios.post(`${API_URL}investments`, investmentData);
+    return response.data;
+  } catch (error) {
+    console.error("Error al crear la inversión:", error);
+    throw new Error("Error al registrar la inversión");
+  }
+};
+
+export const getInvestmentsByUser = async () => {
+  const token = localStorage.getItem("token");
+  const userid = localStorage.getItem("userID");
+  if (!userid) {
+    throw new Error("User ID no encontrado en el localStorage");
+  }
+  try {
+    const response = await axios.get(`${API_URL}investments/${userid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al obtener las inversiones:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error("Error al obtener las inversiones");
+  }
+};
