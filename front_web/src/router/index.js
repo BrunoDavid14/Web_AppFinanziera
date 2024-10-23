@@ -8,6 +8,10 @@ import ExpensesView from "@/views/ExpensesView.vue";
 import GetExpensesView from "@/views/GetExpensesView.vue";
 import BudgetView from "@/views/BudgetView.vue";
 import InvestmentView from "../views/InvestmentView.vue";
+import EditReceiptView from "@/views/EditReceiptView.vue";
+import GetReceiptHistoryView from "@/views/GetReceiptHistoryView.vue";
+import EditExpensesWeb from "@/components/EditExpensesWeb.vue";
+import GetExpensesHistoryWeb from "@/components/GetExpensesHistoryWeb.vue";
 
 const routes = [
   {
@@ -33,6 +37,18 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: "/edit-receipt/:idingreso",
+    name: "EditReceipt",
+    component: EditReceiptView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/history-receipt/:idingreso",
+    name: "HistoryReceipt",
+    component: GetReceiptHistoryView,
+    meta: { requiresAuth: true },
+  },
+  {
     path: "/expenses",
     name: "Expenses",
     component: ExpensesView,
@@ -42,6 +58,18 @@ const routes = [
     path: "/expensesid",
     name: "Expensesid",
     component: GetExpensesView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/edit-expense/:idgasto",
+    name: "EditExpense",
+    component: EditExpensesWeb,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/history-expense/:idgasto",
+    name: "HistoryExpense",
+    component: GetExpensesHistoryWeb,
     meta: { requiresAuth: true },
   },
   {

@@ -129,7 +129,7 @@ export default {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: auto; /* Centra la cápsula en la página */
-  margin: 120px auto 0;
+  margin: 45px auto 0;
 }
 
 h2 {

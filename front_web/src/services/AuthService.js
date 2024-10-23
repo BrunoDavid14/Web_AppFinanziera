@@ -62,6 +62,38 @@ export const getReceiptsByUser = async (userid) => {
   }
 };
 
+export const editReceipt = async (idingreso, monto, fecha, descripcion) => {
+  try {
+    const response = await axios.put(`${API_URL}ingresos/${idingreso}`, {
+      monto,
+      fecha,
+      descripcion,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al editar el ingreso:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error("Error al editar el ingreso");
+  }
+};
+
+export const getReceiptHistory = async (idingreso) => {
+  try {
+    const response = await axios.get(
+      `${API_URL}ingresos/${idingreso}/historial`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al obtener el historial del ingreso:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error("Error al obtener el historial del ingreso");
+  }
+};
+
 export const expenses = async (
   monto,
   categoriaid,
@@ -110,6 +142,36 @@ export const getExpensesByUser = async (userid) => {
       error.response ? error.response.data : error.message
     );
     throw new Error("Error al obtener los gastos");
+  }
+};
+
+export const editExpenses = async (idgasto, monto, fecha, descripcion) => {
+  try {
+    const response = await axios.put(`${API_URL}gastos/${idgasto}`, {
+      monto,
+      fecha,
+      descripcion,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al editar el gasto:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error("Error al editar el gasto");
+  }
+};
+
+export const getExpensesHistory = async (idgasto) => {
+  try {
+    const response = await axios.get(`${API_URL}gastos/${idgasto}/historial`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al obtener el historial del gasto:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error("Error al obtener el historial del gasto");
   }
 };
 

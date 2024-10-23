@@ -132,7 +132,7 @@ export default {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: relative; /* Necesario para el posicionamiento absoluto de la imagen */
-  margin: 120px auto 0;
+  margin: 45px auto 0;
 }
 
 input[type="date"]:hover {
