@@ -103,33 +103,38 @@ export default {
 </script>
 
 <style scoped>
-.budget-form-container {
-  max-width: 400px;
-  margin: 0 auto;
+/* Contenedor principal */
+.container {
+  max-width: 500px;
+  margin: 110px auto;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #dee0e0;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 150px auto 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Título centrado */
 h2 {
   text-align: center;
+  font-size: 1.8em;
   color: #333;
   margin-bottom: 20px;
 }
 
-.budget-form {
+/* Estilos del formulario */
+form {
   display: flex;
   flex-direction: column;
 }
 
-.form-group {
+/* Campos del formulario */
+.mb-3 {
   margin-bottom: 15px;
 }
 
 label {
   font-weight: bold;
+  color: #555;
   margin-bottom: 5px;
   display: block;
 }
@@ -137,48 +142,53 @@ label {
 input {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #bdc3c7;
   border-radius: 5px;
   font-size: 16px;
   box-sizing: border-box;
+  transition: border-color 0.3s ease;
 }
 
 input:focus {
-  border-color: #007bff;
+  border-color: #3498db;
   outline: none;
 }
 
-.form-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
-}
-
-button {
-  padding: 10px 20px;
+/* Botón de Crear Presupuesto */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745; /* Verde */
+  color: white;
   border: none;
   border-radius: 5px;
   font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 20px;
 }
 
-.btn-submit {
-  background-color: #28a745;
-  color: white;
-}
-
-.btn-submit:hover {
+.btn-primary:hover {
   background-color: #218838;
 }
 
-.btn-cancel {
-  background-color: #dc3545;
+/* Botón de Regresar al Dashboard */
+.text-center .btn-secondary {
+  width: 100%;
+  padding: 12px;
+  background-color: #3498db; /* Azul */
   color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px;
 }
 
-.btn-cancel:hover {
-  background-color: #c82333;
+.text-center .btn-secondary:hover {
+  background-color: #2980b9;
 }
 </style>

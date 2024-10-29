@@ -29,14 +29,7 @@ async function getBudgetsByUser(userid) {
   }
 }
 
-async function getBudgetById(id) {
-  const query = 'SELECT * FROM budget WHERE id = $1;';
-  const result = await pool.query(query, [id]);
-  return result.rows[0];
-}
-
 module.exports = {
   createBudget,
   getBudgetsByUser,
-  getBudgetById,
 };

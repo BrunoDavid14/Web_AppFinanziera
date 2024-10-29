@@ -37,7 +37,6 @@ app.get('/categorias', CategoriasController.GetSources);
 app.post('/categorias', CategoriasController.createCategory);
 app.post('/budgetscreate', BudgetController.createBudget);
 app.get('/budgets/:userid', BudgetController.getBudgetsByUser);
-app.get('/budgets/:id', BudgetController.getBudgetById);
 app.post('/investments', InvestmentTrackingController.createInvestmentTracking);
 app.get('/investments/:userid', InvestmentTrackingController.getInvestmentsByUser);
 

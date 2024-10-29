@@ -225,16 +225,6 @@ export const getBudgetsByUser = async (userid) => {
   }
 };
 
-export const getBudgetById = async (id) => {
-  try {
-    const response = await axios.get(`${API_URL}budgets/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error al obtener el presupuesto:", error);
-    throw error;
-  }
-};
-
 export const createInvestment = async (investmentData) => {
   try {
     const response = await axios.post(`${API_URL}investments`, investmentData);
