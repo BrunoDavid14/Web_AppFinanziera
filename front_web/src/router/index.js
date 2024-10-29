@@ -97,18 +97,17 @@ const router = createRouter({
   routes,
 });
 
-// Middleware para verificar la autenticación
 router.beforeEach((to, from, next) => {
   if (to.matched.some((route) => route.meta.requiresAuth)) {
-    const token = localStorage.getItem("token"); // Obtiene el token del localStorage
+    const token = localStorage.getItem("token");
 
     if (token) {
-      next(); // Permitir el acceso a la ruta
+      next();
     } else {
-      next({ name: "Login" }); // Redirigir al login si no hay token
+      next({ name: "Login" });
     }
   } else {
-    next(); // Siempre permitir el acceso a rutas no protegidas
+    next();
   }
 });
 

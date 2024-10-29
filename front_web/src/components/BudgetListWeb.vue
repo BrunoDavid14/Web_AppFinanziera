@@ -1,12 +1,18 @@
-<!-- src/components/BudgetList.vue -->
 <template>
   <div class="page-wrapper">
     <div class="container">
       <h2>Lista de Presupuestos</h2>
-      <ul class="budget-list">
+      <div v-if="loading" class="loading">Cargando...</div>
+      <div v-if="error" class="error">{{ error }}</div>
+
+      <ul v-if="budgets.length > 0" class="budget-list">
         <li v-for="budget in budgets" :key="budget.id" class="budget-item">
           <div class="budget-card">
-            <img src="@/assets/images.png" alt="Ingreso" class="income-image" />
+            <img
+              src="@/assets/images.png"
+              alt="Presupuesto"
+              class="budget-image"
+            />
             <div class="budget-info">
               {{ budget.name }} -
               <span class="budget-amount">{{
@@ -19,9 +25,8 @@
           </div>
         </li>
       </ul>
-      <button @click="showCreateBudgetForm" class="btn-create">
-        Crear Nuevo Presupuesto
-      </button>
+
+      <div v-else class="no-budgets">No hay presupuestos disponibles.</div>
       <button type="button" @click="goToDashboard" class="btn btn-primary">
         Regresar al Dashboard
       </button>
@@ -30,27 +35,35 @@
 </template>
 
 <script>
-import { getAllBudgets } from "../services/AuthService";
+import { getBudgetsByUser } from "../services/AuthService";
 
 export default {
   data() {
     return {
       budgets: [],
+      loading: true,
+      error: null,
     };
   },
+  async created() {
+    const userid = localStorage.getItem("userID");
+    if (!userid) {
+      this.error = "No se ha encontrado el ID de usuario.";
+      this.loading = false;
+      return;
+    }
+
+    try {
+      this.budgets = await getBudgetsByUser(userid);
+    } catch (err) {
+      this.error = err.message;
+    } finally {
+      this.loading = false;
+    }
+  },
   methods: {
-    async fetchBudgets() {
-      try {
-        this.budgets = await getAllBudgets();
-      } catch (error) {
-        console.error("Error al obtener los presupuestos:", error);
-      }
-    },
     viewBudgetDetails(id) {
-      this.$emit("view-budget", id);
-    },
-    showCreateBudgetForm() {
-      this.$emit("create-budget");
+      this.$router.push(`/budget-details/${id}`);
     },
     goToDashboard() {
       this.$router.push("/dashboard");
@@ -60,12 +73,8 @@ export default {
         style: "currency",
         currency: "COP",
         minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
       }).format(value);
     },
-  },
-  created() {
-    this.fetchBudgets();
   },
 };
 </script>
@@ -74,25 +83,22 @@ export default {
 .page-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   height: 100vh;
 }
 
 .container {
-  max-width: 900px;
-  padding: 30px;
+  max-width: 800px;
+  width: 100%;
+  padding: 20px;
   background-color: #dee0e0;
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  flex: 1;
-  overflow-y: auto;
-  margin-bottom: 20px;
   margin-top: 20px;
 }
 
 h2 {
-  font-size: 2.5em;
+  font-size: 2em;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -108,29 +114,31 @@ h2 {
 }
 
 .budget-card {
+  display: flex;
+  align-items: center;
   background-color: #ffffff;
   border: 1px solid #bdc3c7;
-  padding: 20px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  border-radius: 8px;
+  padding: 15px;
   transition: transform 0.2s, box-shadow 0.2s;
-}
-.income-image {
-  width: 60px;
-  height: 60px;
 }
 
 .budget-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+.budget-image {
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+}
+
 .budget-info {
-  font-size: 16px;
+  font-size: 1.2em;
   font-weight: 500;
   color: #333;
+  flex: 1;
 }
 
 .budget-amount {
@@ -139,7 +147,7 @@ h2 {
 }
 
 .btn-details {
-  padding: 8px 12px;
+  padding: 10px 15px;
   background-color: #3498db;
   color: white;
   border: none;
@@ -153,10 +161,8 @@ h2 {
 }
 
 .btn-create {
-  display: block;
   width: 100%;
-  padding: 10px;
-  margin-top: 20px;
+  padding: 12px;
   background-color: #28a745;
   color: white;
   border: none;
@@ -164,7 +170,7 @@ h2 {
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-bottom: 20px;
+  margin-top: 15px;
 }
 
 .btn-create:hover {
@@ -172,14 +178,16 @@ h2 {
 }
 
 .btn-primary {
-  display: block;
-  margin: 30px auto;
+  width: 100%;
+  padding: 12px;
   background-color: #3498db;
   color: white;
-  padding: 10px 20px;
   border: none;
   border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 15px;
 }
 
 .btn-primary:hover {

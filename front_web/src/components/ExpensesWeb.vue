@@ -18,14 +18,15 @@
         />
       </div>
       <div class="mb-3">
-        <label for="categoria" class="form-label">Categoria del gasto</label>
+        <label for="categoria" class="form-label">Categoría del gasto</label>
         <select
           v-model="gasto.categoriaid"
           class="form-control"
           id="categoria"
           required
+          @change="checkIfOther"
         >
-          <option value="" disabled>Seleccione una categoria</option>
+          <option value="" disabled>Seleccione una categoría</option>
           <option
             v-for="categoria in categorias"
             :key="categoria.id"
@@ -33,7 +34,17 @@
           >
             {{ categoria.nombre }}
           </option>
+          <option value="otros">Otros</option>
         </select>
+        <div v-if="showAddCategory" class="mt-2">
+          <input
+            type="text"
+            v-model="newCategory"
+            class="form-control"
+            placeholder="Nueva categoría"
+            @blur="saveNewCategory"
+          />
+        </div>
       </div>
       <div class="mb-3">
         <label for="fecha" class="form-label">Fecha</label>
@@ -59,7 +70,7 @@
 </template>
 
 <script>
-import { expenses, GetSources } from "../services/AuthService";
+import { expenses, GetSources, createCategory } from "../services/AuthService";
 
 export default {
   data() {
@@ -71,17 +82,27 @@ export default {
         descripcion: "",
       },
       categorias: [],
+      newCategory: "",
+      showAddCategory: false,
     };
   },
   methods: {
     async RecordExpenses() {
       const token = localStorage.getItem("token");
       const userid = localStorage.getItem("userID");
+
       if (!token || !userid) {
         alert("Usuario no autenticado");
         return;
       }
+
       try {
+        if (this.gasto.categoriaid === "otros" && this.newCategory) {
+          // Crear la nueva categoría si se seleccionó "otros"
+          await this.saveNewCategory();
+        }
+
+        // Registrar el gasto
         await expenses(
           this.gasto.monto,
           this.gasto.categoriaid,
@@ -89,6 +110,7 @@ export default {
           this.gasto.descripcion,
           userid
         );
+
         alert("Gasto registrado correctamente");
         this.clearForm();
       } catch (error) {
@@ -100,8 +122,36 @@ export default {
       try {
         this.categorias = await GetSources();
       } catch (error) {
-        alert("Error al cargar las categorias de gasto");
+        alert("Error al cargar las categorías de gasto");
       }
+    },
+    async saveNewCategory() {
+      if (this.newCategory) {
+        try {
+          // Crear la nueva categoría
+          await createCategory(this.newCategory);
+          await this.fetchSources(); // Actualizar la lista de categorías para incluir la nueva
+
+          // Buscar la categoría recién creada en la lista por su nombre
+          const categoriaRecienCreada = this.categorias.find(
+            (categoria) => categoria.nombre === this.newCategory
+          );
+
+          if (categoriaRecienCreada) {
+            // Seleccionar automáticamente la nueva categoría por su ID
+            this.gasto.categoriaid = categoriaRecienCreada.id;
+          }
+
+          this.newCategory = "";
+          this.showAddCategory = false;
+        } catch (error) {
+          console.error("Error al guardar la nueva categoría:", error);
+          alert("Error al guardar la nueva categoría");
+        }
+      }
+    },
+    checkIfOther() {
+      this.showAddCategory = this.gasto.categoriaid === "otros";
     },
     clearForm() {
       this.gasto = {
@@ -110,6 +160,8 @@ export default {
         fecha: "",
         descripcion: "",
       };
+      this.showAddCategory = false;
+      this.newCategory = "";
     },
     goToDashboard() {
       this.$router.push({ path: "/Dashboard" });

@@ -132,6 +132,21 @@ export const GetSources = async () => {
   }
 };
 
+export const createCategory = async (nombre) => {
+  try {
+    const response = await axios.post(`${API_URL}categorias`, { nombre });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al crear la categoría:",
+      error.response ? error.response.data : error.message,
+      "Status:",
+      error.response ? error.response.status : "No hay status"
+    );
+    throw new Error("Error al crear la categoría de gasto");
+  }
+};
+
 export const getExpensesByUser = async (userid) => {
   try {
     const response = await axios.get(`${API_URL}gastos/${userid}`);
@@ -175,9 +190,21 @@ export const getExpensesHistory = async (idgasto) => {
   }
 };
 
-export const createBudget = async (budgetData) => {
+export const createBudget = async (
+  name,
+  totalAmount,
+  startDate,
+  endDate,
+  userid
+) => {
   try {
-    const response = await axios.post(`${API_URL}budgetscreate`, budgetData);
+    const response = await axios.post(`${API_URL}budgetscreate`, {
+      name,
+      totalAmount,
+      startDate,
+      endDate,
+      userid,
+    });
     return response.data;
   } catch (error) {
     console.error("Error al crear el presupuesto:", error);
@@ -185,12 +212,15 @@ export const createBudget = async (budgetData) => {
   }
 };
 
-export const getAllBudgets = async () => {
+export const getBudgetsByUser = async (userid) => {
   try {
-    const response = await axios.get(`${API_URL}budgets`);
+    const response = await axios.get(`${API_URL}budgets/${userid}`);
     return response.data;
   } catch (error) {
-    console.error("Error al obtener los presupuestos:", error);
+    console.error(
+      "Error al obtener los presupuestos:",
+      error.response ? error.response.data : error.message
+    );
     throw error;
   }
 };

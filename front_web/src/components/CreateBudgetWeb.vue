@@ -1,27 +1,51 @@
 <template>
-  <div class="budget-form-container">
-    <h2>Crear Nuevo Presupuesto</h2>
-    <form @submit.prevent="submitForm" class="budget-form">
-      <div class="form-group">
-        <label>Nombre:</label>
-        <input v-model="name" type="text" required />
+  <div class="container">
+    <div class="text-center mb-3">
+      <button type="button" @click="goToDashboard" class="btn btn-secondary">
+        Regresar al Dashboard
+      </button>
+    </div>
+    <h2>Crear Presupuesto</h2>
+    <form @submit.prevent="submitBudget">
+      <div class="mb-3">
+        <label for="name" class="form-label">Nombre</label>
+        <input
+          type="text"
+          v-model="budget.name"
+          class="form-control"
+          id="name"
+          required
+        />
       </div>
-      <div class="form-group">
-        <label>Monto Total:</label>
-        <input v-model="totalAmount" type="number" required />
+      <div class="mb-3">
+        <label for="totalAmount" class="form-label">Monto Total</label>
+        <input
+          type="number"
+          v-model="budget.totalAmount"
+          class="form-control"
+          id="totalAmount"
+          required
+        />
       </div>
-      <div class="form-group">
-        <label>Fecha de Inicio:</label>
-        <input v-model="startDate" type="date" />
+      <div class="mb-3">
+        <label for="startDate" class="form-label">Fecha de Inicio</label>
+        <input
+          type="date"
+          v-model="budget.startDate"
+          class="form-control"
+          id="startDate"
+        />
       </div>
-      <div class="form-group">
-        <label>Fecha de Fin:</label>
-        <input v-model="endDate" type="date" />
+      <div class="mb-3">
+        <label for="endDate" class="form-label">Fecha de Fin</label>
+        <input
+          type="date"
+          v-model="budget.endDate"
+          class="form-control"
+          id="endDate"
+        />
       </div>
-      <div class="form-actions">
-        <button type="submit" class="btn-submit">Crear</button>
-        <button @click="$emit('back')" class="btn-cancel">Cancelar</button>
-      </div>
+      <button type="submit" class="btn btn-primary">Crear Presupuesto</button>
     </form>
   </div>
 </template>
@@ -32,26 +56,47 @@ import { createBudget } from "../services/AuthService";
 export default {
   data() {
     return {
-      name: "",
-      totalAmount: "",
-      startDate: "",
-      endDate: "",
+      budget: {
+        name: "",
+        totalAmount: "",
+        startDate: "",
+        endDate: "",
+      },
     };
   },
   methods: {
-    async submitForm() {
+    async submitBudget() {
+      const userid = localStorage.getItem("userID");
+      if (!userid) {
+        alert("Usuario no autenticado");
+        return;
+      }
+
       try {
-        const budgetData = {
-          name: this.name,
-          totalAmount: parseFloat(this.totalAmount),
-          startDate: this.startDate || null,
-          endDate: this.endDate || null,
-        };
-        await createBudget(budgetData);
-        this.$emit("budget-created");
+        await createBudget(
+          this.budget.name,
+          parseFloat(this.budget.totalAmount),
+          this.budget.startDate || null,
+          this.budget.endDate || null,
+          userid
+        );
+        alert("Presupuesto creado con éxito");
+        this.clearForm();
       } catch (error) {
         console.error("Error al crear el presupuesto:", error);
+        alert("Hubo un error al crear el presupuesto");
       }
+    },
+    clearForm() {
+      this.budget = {
+        name: "",
+        totalAmount: "",
+        startDate: "",
+        endDate: "",
+      };
+    },
+    goToDashboard() {
+      this.$router.push({ path: "/Dashboard" });
     },
   },
 };
