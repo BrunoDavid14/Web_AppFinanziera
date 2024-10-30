@@ -1,13 +1,14 @@
 <template>
   <DashboardLayout>
-    <router-view />
+    <DashboardComponent />
   </DashboardLayout>
 </template>
 
 <script setup>
 import DashboardLayout from "@/layouts/DashboardLayout.vue";
+import DashboardComponent from "@/components/DashboardComponent.vue";
 </script>
 
 <style scoped>
-/* Add view-specific styles here */
+/* Estilos específicos para esta vista si los necesitas */
 </style>

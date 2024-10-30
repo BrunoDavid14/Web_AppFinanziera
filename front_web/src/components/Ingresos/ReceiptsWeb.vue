@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { receipts, getSources } from "../services/AuthService";
+import { receipts, getSources } from "../../services/AuthService";
 
 export default {
   data() {

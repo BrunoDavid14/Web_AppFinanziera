@@ -1,77 +1,77 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand">FinanzasPlus</a>
+  <div>
+    <!-- Header o navbar del Dashboard -->
+    <header class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand">FinanzasPlus</a>
 
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#" @click="GotoExpenses">Mis Gastos</a>
-        </li>
-      </ul>
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#" @click="GotoExpenses">Mis Gastos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" @click="GotoReceipts">Mis Ingresos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" @click="GotoBudget">Mi Presupuesto</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" @click="GotoInvestments"
+              >Mis Inversiones</a
+            >
+          </li>
+        </ul>
 
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#" @click="GotoReceipts">Mis Ingresos</a>
-        </li>
-      </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              id="userDropdown"
+              @click="toggleDropdown"
+            >
+              {{ nombreUsuario }}
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              :class="{ show: dropdownVisible }"
+              aria-labelledby="userDropdown"
+            >
+              <li>
+                <a class="dropdown-item" href="#" @click="perfil">Mi perfil</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" @click="GotoRegisterReceipts"
+                  >Registrar Ingreso</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" @click="GotoRegisterExpenses"
+                  >Registrar Gasto</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" @click="logout"
+                  >Cerrar Sesión</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </header>
 
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#" @click="GotoBudget">Mi Presupuesto</a>
-        </li>
-      </ul>
-
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#" @click="GotoInvestments"
-            >Mis Inversiones</a
-          >
-        </li>
-      </ul>
-
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
-            id="userDropdown"
-            @click="toggleDropdown"
-          >
-            {{ nombreUsuario }}
-          </a>
-          <ul
-            class="dropdown-menu dropdown-menu-end"
-            :class="{ show: dropdownVisible }"
-            aria-labelledby="userDropdown"
-          >
-            <li>
-              <a class="dropdown-item" href="#" @click="perfil">Mi perfil</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" @click="GotoRegisterReceipts"
-                >Registrar Ingreso</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" @click="GotoRegisterExpenses"
-                >Registrar Gasto</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="#" @click="logout"
-                >Cerrar Sesión</a
-              >
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </nav>
+    <!-- Slot para el contenido del Dashboard -->
+    <main>
+      <slot />
+    </main>
+  </div>
 </template>
 
 <script>
 export default {
+  name: "DashboardLayout",
   data() {
     return {
       dropdownVisible: false, // Controla si el menú desplegable está visible
