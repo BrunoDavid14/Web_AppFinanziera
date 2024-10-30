@@ -1,27 +1,51 @@
 <template>
-  <div class="budget-form-container">
-    <h2>Crear Nuevo Presupuesto</h2>
-    <form @submit.prevent="submitForm" class="budget-form">
-      <div class="form-group">
-        <label>Nombre:</label>
-        <input v-model="name" type="text" required />
+  <div class="container">
+    <div class="text-center mb-3">
+      <button type="button" @click="goToDashboard" class="btn btn-secondary">
+        Regresar al Dashboard
+      </button>
+    </div>
+    <h2>Crear Presupuesto</h2>
+    <form @submit.prevent="submitBudget">
+      <div class="mb-3">
+        <label for="name" class="form-label">Nombre</label>
+        <input
+          type="text"
+          v-model="budget.name"
+          class="form-control"
+          id="name"
+          required
+        />
       </div>
-      <div class="form-group">
-        <label>Monto Total:</label>
-        <input v-model="totalAmount" type="number" required />
+      <div class="mb-3">
+        <label for="totalAmount" class="form-label">Monto Total</label>
+        <input
+          type="number"
+          v-model="budget.totalAmount"
+          class="form-control"
+          id="totalAmount"
+          required
+        />
       </div>
-      <div class="form-group">
-        <label>Fecha de Inicio:</label>
-        <input v-model="startDate" type="date" />
+      <div class="mb-3">
+        <label for="startDate" class="form-label">Fecha de Inicio</label>
+        <input
+          type="date"
+          v-model="budget.startDate"
+          class="form-control"
+          id="startDate"
+        />
       </div>
-      <div class="form-group">
-        <label>Fecha de Fin:</label>
-        <input v-model="endDate" type="date" />
+      <div class="mb-3">
+        <label for="endDate" class="form-label">Fecha de Fin</label>
+        <input
+          type="date"
+          v-model="budget.endDate"
+          class="form-control"
+          id="endDate"
+        />
       </div>
-      <div class="form-actions">
-        <button type="submit" class="btn-submit">Crear</button>
-        <button @click="$emit('back')" class="btn-cancel">Cancelar</button>
-      </div>
+      <button type="submit" class="btn btn-primary">Crear Presupuesto</button>
     </form>
   </div>
 </template>
@@ -32,59 +56,85 @@ import { createBudget } from "../services/AuthService";
 export default {
   data() {
     return {
-      name: "",
-      totalAmount: "",
-      startDate: "",
-      endDate: "",
+      budget: {
+        name: "",
+        totalAmount: "",
+        startDate: "",
+        endDate: "",
+      },
     };
   },
   methods: {
-    async submitForm() {
+    async submitBudget() {
+      const userid = localStorage.getItem("userID");
+      if (!userid) {
+        alert("Usuario no autenticado");
+        return;
+      }
+
       try {
-        const budgetData = {
-          name: this.name,
-          totalAmount: parseFloat(this.totalAmount),
-          startDate: this.startDate || null,
-          endDate: this.endDate || null,
-        };
-        await createBudget(budgetData);
-        this.$emit("budget-created");
+        await createBudget(
+          this.budget.name,
+          parseFloat(this.budget.totalAmount),
+          this.budget.startDate || null,
+          this.budget.endDate || null,
+          userid
+        );
+        alert("Presupuesto creado con éxito");
+        this.clearForm();
       } catch (error) {
         console.error("Error al crear el presupuesto:", error);
+        alert("Hubo un error al crear el presupuesto");
       }
+    },
+    clearForm() {
+      this.budget = {
+        name: "",
+        totalAmount: "",
+        startDate: "",
+        endDate: "",
+      };
+    },
+    goToDashboard() {
+      this.$router.push({ path: "/Dashboard" });
     },
   },
 };
 </script>
 
 <style scoped>
-.budget-form-container {
-  max-width: 400px;
-  margin: 0 auto;
+/* Contenedor principal */
+.container {
+  max-width: 500px;
+  margin: 110px auto;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #dee0e0;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 150px auto 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Título centrado */
 h2 {
   text-align: center;
+  font-size: 1.8em;
   color: #333;
   margin-bottom: 20px;
 }
 
-.budget-form {
+/* Estilos del formulario */
+form {
   display: flex;
   flex-direction: column;
 }
 
-.form-group {
+/* Campos del formulario */
+.mb-3 {
   margin-bottom: 15px;
 }
 
 label {
   font-weight: bold;
+  color: #555;
   margin-bottom: 5px;
   display: block;
 }
@@ -92,48 +142,53 @@ label {
 input {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #bdc3c7;
   border-radius: 5px;
   font-size: 16px;
   box-sizing: border-box;
+  transition: border-color 0.3s ease;
 }
 
 input:focus {
-  border-color: #007bff;
+  border-color: #3498db;
   outline: none;
 }
 
-.form-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
-}
-
-button {
-  padding: 10px 20px;
+/* Botón de Crear Presupuesto */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745; /* Verde */
+  color: white;
   border: none;
   border-radius: 5px;
   font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 20px;
 }
 
-.btn-submit {
-  background-color: #28a745;
-  color: white;
-}
-
-.btn-submit:hover {
+.btn-primary:hover {
   background-color: #218838;
 }
 
-.btn-cancel {
-  background-color: #dc3545;
+/* Botón de Regresar al Dashboard */
+.text-center .btn-secondary {
+  width: 100%;
+  padding: 12px;
+  background-color: #3498db; /* Azul */
   color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px;
 }
 
-.btn-cancel:hover {
-  background-color: #c82333;
+.text-center .btn-secondary:hover {
+  background-color: #2980b9;
 }
 </style>

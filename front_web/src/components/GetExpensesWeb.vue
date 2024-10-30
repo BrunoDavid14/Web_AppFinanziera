@@ -23,6 +23,21 @@
                 Categoría de gasto:
                 {{ expense.categoria_nombre || "Categoría desconocida" }}
               </p>
+              <!-- Botones para editar y ver historial -->
+              <div class="button-container">
+                <button
+                  @click="editExpenses(expense.idgasto)"
+                  class="btn btn-secondary"
+                >
+                  Editar
+                </button>
+                <button
+                  @click="historyExpenses(expense.idgasto)"
+                  class="btn btn-secondary"
+                >
+                  Historial
+                </button>
+              </div>
             </div>
           </div>
         </li>
@@ -89,6 +104,14 @@ export default {
 
     goToDashboard() {
       this.$router.push("/dashboard"); // Redirecciona a la ruta del Dashboard
+    },
+
+    editExpenses(idgasto) {
+      this.$router.push(`/edit-expense/${idgasto}`);
+    },
+
+    historyExpenses(idgasto) {
+      this.$router.push(`/history-expense/${idgasto}`);
     },
 
     // Método para calcular el total de gastos
@@ -202,6 +225,12 @@ h1 {
   color: #7f8c8d; /* Color gris para no hay gastos */
 }
 
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Espacio entre los botones */
+  margin-top: 10px; /* Espaciado superior */
+}
+
 .btn-primary {
   display: block;
   margin: 30px auto;
@@ -215,5 +244,18 @@ h1 {
 
 .btn-primary:hover {
   background-color: #2980b9;
+}
+
+.btn-secondary {
+  background-color: #6c757d; /* Color de fondo del botón */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 10px 15px; /* Espaciado interior */
+  transition: background-color 0.3s; /* Transición suave */
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268; /* Color de fondo al pasar el mouse */
 }
 </style>
