@@ -28,7 +28,39 @@ async function getExpensesbyuser (req, res) {
     }
 }
 
+async function editExpenses(req, res) {
+    const { idgasto } = req.params;
+    const { monto, fecha, descripcion } = req.body;
+    try {
+        // Edita el ingreso
+        const updatedExpenses = await GastosService.editExpenses(idgasto, monto, fecha, descripcion);
+        if (updatedExpenses) {
+            res.status(200).json({ message: 'Gasto actualizado exitosamente', updatedExpenses });
+        } else {
+            res.status(404).json({ error: 'Gasto no encontrado' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Error al editar el gasto' });
+    }
+}
+
+async function getExpensesHistory(req, res) {
+    const { idgasto } = req.params; // Obtener el ID del ingreso para filtrar el historial
+    try {
+        const history = await GastosService.getExpensesHistory(idgasto);
+        if (history) {
+            res.status(200).json(history);
+        } else {
+            res.status(404).json({ error: 'Historial no encontrado' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener el historial' });
+    }
+}
+
 module.exports = {
     createExpenses,
     getExpensesbyuser,
+    editExpenses,
+    getExpensesHistory,
   };

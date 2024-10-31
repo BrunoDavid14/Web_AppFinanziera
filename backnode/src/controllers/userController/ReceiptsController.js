@@ -28,7 +28,39 @@ async function getReceipsbyuser (req, res) {
     }
 }
 
+async function editReceipt(req, res) {
+    const { idingreso } = req.params; // ID del ingreso a editar
+    const { monto, fecha, descripcion } = req.body; // Nuevos datos (solo monto, fecha y descripcion)
+    try {
+        // Edita el ingreso
+        const updatedReceipt = await IngresosService.editReceipt(idingreso, monto, fecha, descripcion);
+        if (updatedReceipt) {
+            res.status(200).json({ message: 'Ingreso actualizado exitosamente', updatedReceipt });
+        } else {
+            res.status(404).json({ error: 'Ingreso no encontrado' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Error al editar el ingreso' });
+    }
+}
+
+async function getReceiptHistory(req, res) {
+    const { idingreso } = req.params; // Obtener el ID del ingreso para filtrar el historial
+    try {
+        const history = await IngresosService.getReceiptHistory(idingreso);
+        if (history) {
+            res.status(200).json(history);
+        } else {
+            res.status(404).json({ error: 'Historial no encontrado' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener el historial' });
+    }
+}
+
 module.exports = {
     createReceipts,
     getReceipsbyuser,
-  };
+    editReceipt,
+    getReceiptHistory,
+};

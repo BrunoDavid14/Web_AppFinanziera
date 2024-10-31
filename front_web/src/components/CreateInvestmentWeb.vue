@@ -4,16 +4,22 @@
     <div class="investment-create-box">
       <form @submit.prevent="submitInvestment">
         <!-- Cambié el método a submitInvestment -->
-        <label for="PerfilInversor">Perfil Inversor:</label>
+        <label for="PerfilInversor"
+          >Perfil Inversor (Conservador, Moderado, Arriesgado):</label
+        >
         <input type="text" v-model="perfilInversor" />
 
-        <label for="HorizonteInversion">Horizonte:</label>
+        <label for="HorizonteInversion"
+          >Plazo inversion (Corto, Mediano, Largo):</label
+        >
         <input type="text" v-model="horizonteInversion" />
 
-        <label for="TipoActivo">Tipo de Activo:</label>
+        <label for="TipoActivo"
+          >Tipo de Activo (Acciones, Fondos, Cripto):</label
+        >
         <input type="text" v-model="tipoActivo" />
 
-        <label for="NombreActivo">Nombre del Activo:</label>
+        <label for="NombreActivo">Nombre del Activo (BTC, AAPL, ETH):</label>
         <input type="text" v-model="nombreActivo" />
 
         <label for="Cantidad">Cantidad:</label>
@@ -115,6 +121,8 @@ export default {
   border-radius: 10px;
   padding: 20px;
   width: 80%;
+  max-height: 570px; /* Establece una altura máxima */
+  overflow-y: auto; /* Activa la barra de desplazamiento vertical */
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 

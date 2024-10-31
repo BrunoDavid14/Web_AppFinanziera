@@ -1,24 +1,45 @@
-<!-- src/components/BudgetList.vue -->
 <template>
   <div class="page-wrapper">
     <div class="container">
-      <h2>Lista de Presupuestos</h2>
-      <ul class="budget-list">
+      <h2>Mis Presupuestos</h2>
+      <div v-if="loading" class="loading">Cargando...</div>
+      <div v-if="error" class="error">{{ error }}</div>
+
+      <ul v-if="budgets.length > 0" class="budget-list">
         <li v-for="budget in budgets" :key="budget.id" class="budget-item">
           <div class="budget-card">
-            <img src="@/assets/images.png" alt="Ingreso" class="income-image" />
+            <img
+              src="@/assets/images.png"
+              alt="Presupuesto"
+              class="budget-image"
+            />
             <div class="budget-info">
-              {{ budget.name }} -
-              <span class="budget-amount">{{
-                formatCurrency(budget.total_amount)
-              }}</span>
+              <p>
+                <span class="number budget-amount"
+                  >Monto Total: {{ formatCurrency(budget.total_amount) }}</span
+                >
+              </p>
+              <p>Nombre: {{ budget.name || "No disponible" }}</p>
+              <p>
+                Fecha de Inicio:
+                {{ formatDate(budget.start_date) }}
+              </p>
+              <p>
+                Fecha de Fin:
+                {{ formatDate(budget.end_date) }}
+              </p>
+              <p>
+                Balance Restante:
+                <span class="number">{{
+                  formatCurrency(budget.remaining_balance)
+                }}</span>
+              </p>
             </div>
-            <button @click="viewBudgetDetails(budget.id)" class="btn-details">
-              Ver Detalles
-            </button>
           </div>
         </li>
       </ul>
+
+      <div v-else class="no-budgets">No hay presupuestos disponibles.</div>
       <button @click="showCreateBudgetForm" class="btn-create">
         Crear Nuevo Presupuesto
       </button>
@@ -30,42 +51,51 @@
 </template>
 
 <script>
-import { getAllBudgets } from "../services/AuthService";
+import { getBudgetsByUser } from "../services/AuthService";
 
 export default {
   data() {
     return {
       budgets: [],
+      loading: true,
+      error: null,
     };
   },
+  async created() {
+    const userid = localStorage.getItem("userID");
+    if (!userid) {
+      this.error = "No se ha encontrado el ID de usuario.";
+      this.loading = false;
+      return;
+    }
+
+    try {
+      this.budgets = await getBudgetsByUser(userid);
+    } catch (err) {
+      this.error = err.message;
+    } finally {
+      this.loading = false;
+    }
+  },
   methods: {
-    async fetchBudgets() {
-      try {
-        this.budgets = await getAllBudgets();
-      } catch (error) {
-        console.error("Error al obtener los presupuestos:", error);
-      }
-    },
-    viewBudgetDetails(id) {
-      this.$emit("view-budget", id);
+    goToDashboard() {
+      this.$router.push("/dashboard");
     },
     showCreateBudgetForm() {
       this.$emit("create-budget");
-    },
-    goToDashboard() {
-      this.$router.push("/dashboard");
     },
     formatCurrency(value) {
       return new Intl.NumberFormat("es-CO", {
         style: "currency",
         currency: "COP",
         minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
       }).format(value);
     },
-  },
-  created() {
-    this.fetchBudgets();
+    formatDate(dateString) {
+      if (!dateString) return "Fecha no disponible";
+      const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+      return new Date(dateString).toLocaleDateString("es-ES", options);
+    },
   },
 };
 </script>
@@ -97,6 +127,18 @@ h2 {
   margin-bottom: 20px;
 }
 
+.loading {
+  text-align: center;
+  font-size: 1.5em;
+  color: #7f8c8d;
+}
+
+.error {
+  color: #e74c3c;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .budget-list {
   list-style-type: none;
   padding: 0;
@@ -108,18 +150,13 @@ h2 {
 }
 
 .budget-card {
+  display: flex;
+  align-items: center;
   background-color: #ffffff;
   border: 1px solid #bdc3c7;
-  padding: 20px;
   border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 20px;
   transition: transform 0.2s, box-shadow 0.2s;
-}
-.income-image {
-  width: 60px;
-  height: 60px;
 }
 
 .budget-card:hover {
@@ -127,44 +164,42 @@ h2 {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+.budget-image {
+  width: 60px;
+  height: 60px;
+  margin-right: 15px;
+}
+
 .budget-info {
-  font-size: 16px;
+  font-size: 1.2em;
   font-weight: 500;
   color: #333;
+  flex: 1;
 }
 
 .budget-amount {
+  font-weight: left;
+  font-size: 1em;
   color: #28a745;
-  font-weight: bold;
 }
 
-.btn-details {
-  padding: 8px 12px;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn-details:hover {
-  background-color: #2980b9;
+p {
+  font-size: 0.9em;
+  text-align: left;
+  margin-bottom: 20px;
 }
 
 .btn-create {
-  display: block;
   width: 100%;
   padding: 10px;
-  margin-top: 20px;
   background-color: #28a745;
   color: white;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 1.2em;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-bottom: 20px;
+  margin-top: 15px;
 }
 
 .btn-create:hover {
@@ -172,14 +207,16 @@ h2 {
 }
 
 .btn-primary {
-  display: block;
-  margin: 30px auto;
+  width: 100%;
+  padding: 10px;
   background-color: #3498db;
   color: white;
-  padding: 10px 20px;
   border: none;
   border-radius: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 15px;
 }
 
 .btn-primary:hover {

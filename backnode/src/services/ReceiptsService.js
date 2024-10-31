@@ -36,8 +36,60 @@ async function getReceipsbyuser(userid) {
   }
 }
 
+async function editReceipt(idingreso, monto, fecha, descripcion) {
+    try {
+        // Obtener el ingreso antes de la actualización
+        const previousReceipt = await db.query(
+            `SELECT * FROM Ingresos WHERE IdIngreso = $1`, 
+            [idingreso]
+        );
+
+        if (previousReceipt.rows.length === 0) {
+            // Si el ingreso no existe, devolver null
+            return null;
+        }
+
+        // Actualizar el ingreso
+        const result = await db.query(
+            `UPDATE Ingresos
+             SET Monto = $1, Fecha = $2, Descripcion = $3
+             WHERE IdIngreso = $4
+             RETURNING *`,
+            [monto, fecha, descripcion, idingreso]
+        );
+
+        // Insertar el estado previo en la tabla de historial
+        const { monto: oldMonto, fecha: oldFecha, descripcion: oldDescripcion } = previousReceipt.rows[0];
+        console.log("Datos anteriores:", oldMonto, oldFecha, oldDescripcion);
+
+        await db.query(
+            `INSERT INTO HistorialIngresos (IdIngreso, Monto, Fecha, Descripcion)
+             VALUES ($1, $2, $3, $4)`,
+            [idingreso, oldMonto, oldFecha, oldDescripcion]
+        );
+
+        return result.rows[0]; // Devuelve el ingreso actualizado
+    } catch (error) {
+        throw new Error('Error al editar el ingreso');
+    }
+}
+
+async function getReceiptHistory(idingreso) {
+    try {
+        const result = await db.query(
+            `SELECT * FROM HistorialIngresos WHERE IdIngreso = $1 ORDER BY Fecha DESC`,
+            [idingreso]
+        );
+        return result.rows; // Devuelve los registros del historial
+    } catch (error) {
+        throw new Error('Error al obtener el historial');
+    }
+}
+
 module.exports = {
     createReceipts,
     getReceipsbyuser,
     checkSourceExists,
-};
+    editReceipt, 
+    getReceiptHistory
+}
