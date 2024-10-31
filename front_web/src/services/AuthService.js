@@ -256,3 +256,29 @@ export const getInvestmentsByUser = async () => {
     throw new Error("Error al obtener las inversiones");
   }
 };
+
+export async function calcularYGuardarTotalIngresos(userID) {
+  try {
+    const receipts = await getReceiptsByUser(userID);
+    const totalIngresos = receipts
+      .reduce((total, receipt) => total + parseFloat(receipt.monto), 0)
+      .toFixed(2);
+    return totalIngresos;
+  } catch (error) {
+    console.error("Error al calcular el total de ingresos:", error);
+    throw error;
+  }
+}
+
+export async function calcularYGuardarTotalGastos(userID) {
+  try {
+    const expenses = await getExpensesByUser(userID);
+    const totalGastos = expenses
+      .reduce((total, expense) => total + parseFloat(expense.monto), 0)
+      .toFixed(2);
+    return totalGastos;
+  } catch (error) {
+    console.error("Error al calcular el total de gastos:", error);
+    throw error;
+  }
+}
