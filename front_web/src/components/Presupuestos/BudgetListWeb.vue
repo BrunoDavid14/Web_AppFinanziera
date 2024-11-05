@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { getBudgetsByUser } from "../services/AuthService";
+import { getBudgetsByUser } from "../../services/AuthService";
 
 export default {
   data() {

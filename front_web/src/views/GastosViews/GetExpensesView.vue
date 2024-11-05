@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import GetExpensesWeb from "@/components/GetExpensesWeb.vue";
+import GetExpensesWeb from "@/components/Gastos/GetExpensesWeb.vue";
 </script>

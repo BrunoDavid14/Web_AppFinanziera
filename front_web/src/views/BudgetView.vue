@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import BudgetListWeb from "../components/BudgetListWeb.vue";
-import CreateBudgetWeb from "../components/CreateBudgetWeb.vue";
+import BudgetListWeb from "../components/Presupuestos/BudgetListWeb.vue";
+import CreateBudgetWeb from "../components/Presupuestos/CreateBudgetWeb.vue";
 
 export default {
   components: {

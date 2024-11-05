@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { getInvestmentsByUser } from "../services/AuthService";
+import { getInvestmentsByUser } from "../../services/AuthService";
 
 export default {
   data() {
