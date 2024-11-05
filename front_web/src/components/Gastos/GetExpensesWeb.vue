@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { getExpensesByUser } from "../services/AuthService";
+import { getExpensesByUser } from "../../services/AuthService";
 
 export default {
   name: "ExpensesWeb",

@@ -70,7 +70,11 @@
 </template>
 
 <script>
-import { expenses, GetSources, createCategory } from "../services/AuthService";
+import {
+  expenses,
+  GetSources,
+  createCategory,
+} from "../../services/AuthService";
 
 export default {
   data() {

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { getReceiptHistory } from "../services/AuthService";
+import { getReceiptHistory } from "../../services/AuthService";
 
 export default {
   data() {

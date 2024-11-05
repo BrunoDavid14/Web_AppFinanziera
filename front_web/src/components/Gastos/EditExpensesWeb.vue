@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { editExpenses } from "../services/AuthService";
+import { editExpenses } from "../../services/AuthService";
 
 export default {
   data() {

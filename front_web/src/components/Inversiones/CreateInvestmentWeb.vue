@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { createInvestment } from "../services/AuthService";
+import { createInvestment } from "../../services/AuthService";
 
 export default {
   data() {
@@ -121,7 +121,7 @@ export default {
   border-radius: 10px;
   padding: 20px;
   width: 80%;
-  max-height: 570px; /* Establece una altura máxima */
+  max-height: 625px; /* Establece una altura máxima */
   overflow-y: auto; /* Activa la barra de desplazamiento vertical */
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }

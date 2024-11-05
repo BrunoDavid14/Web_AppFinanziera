@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import GetReceiptHistoryWeb from "@/components/GetReceiptHistoryWeb.vue";
+import GetReceiptHistoryWeb from "@/components/Ingresos/GetReceiptHistoryWeb.vue";
 </script>

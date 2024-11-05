@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { getExpensesHistory } from "../services/AuthService";
+import { getExpensesHistory } from "../../services/AuthService";
 
 export default {
   data() {
