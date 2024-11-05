@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import InvestmentListWeb from "../components/InvestmentListWeb.vue";
-import CreateInvestmentWeb from "../components/CreateInvestmentWeb.vue";
+import InvestmentListWeb from "../components/Inversiones/InvestmentListWeb.vue";
+import CreateInvestmentWeb from "../components/Inversiones/CreateInvestmentWeb.vue";
 
 export default {
   components: {

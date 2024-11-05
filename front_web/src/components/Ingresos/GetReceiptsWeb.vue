@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { getReceiptsByUser } from "../services/AuthService";
+import { getReceiptsByUser } from "../../services/AuthService";
 
 export default {
   name: "ReceiptsWeb",

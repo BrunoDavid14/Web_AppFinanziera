@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import ExpensesWeb from "@/components/ExpensesWeb.vue";
+import ExpensesWeb from "@/components/Gastos/ExpensesWeb.vue";
 </script>

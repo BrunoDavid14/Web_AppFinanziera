@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { createBudget } from "../services/AuthService";
+import { createBudget } from "../../services/AuthService";
 
 export default {
   data() {

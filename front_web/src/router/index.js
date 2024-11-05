@@ -2,16 +2,16 @@ import { createRouter, createWebHistory } from "vue-router";
 import LoginView from "../views/LoginView.vue";
 import Dashboard from "../views/DashboardView.vue";
 import RegisterView from "../views/RegisterView.vue";
-import ReceiptsView from "../views/ReceiptsView.vue";
-import GetReceiptsView from "../views/GetReceiptsView.vue";
-import ExpensesView from "@/views/ExpensesView.vue";
-import GetExpensesView from "@/views/GetExpensesView.vue";
+import ReceiptsView from "../views/IngresosViews/ReceiptsView.vue";
+import GetReceiptsView from "../views/IngresosViews/GetReceiptsView.vue";
+import ExpensesView from "@/views/GastosViews/ExpensesView.vue";
+import GetExpensesView from "@/views/GastosViews/GetExpensesView.vue";
 import BudgetView from "@/views/BudgetView.vue";
 import InvestmentView from "../views/InvestmentView.vue";
-import EditReceiptView from "@/views/EditReceiptView.vue";
-import GetReceiptHistoryView from "@/views/GetReceiptHistoryView.vue";
-import EditExpensesWeb from "@/components/EditExpensesWeb.vue";
-import GetExpensesHistoryWeb from "@/components/GetExpensesHistoryWeb.vue";
+import EditReceiptView from "@/views/IngresosViews/EditReceiptView.vue";
+import GetReceiptHistoryView from "@/views/IngresosViews/GetReceiptHistoryView.vue";
+import EditExpensesView from "@/views/GastosViews/EditExpensesView.vue";
+import GetExpensesHistoryView from "@/views/GastosViews/GetExpensesHistoryView.vue";
 
 const routes = [
   {
@@ -63,13 +63,13 @@ const routes = [
   {
     path: "/edit-expense/:idgasto",
     name: "EditExpense",
-    component: EditExpensesWeb,
+    component: EditExpensesView,
     meta: { requiresAuth: true },
   },
   {
     path: "/history-expense/:idgasto",
     name: "HistoryExpense",
-    component: GetExpensesHistoryWeb,
+    component: GetExpensesHistoryView,
     meta: { requiresAuth: true },
   },
   {
