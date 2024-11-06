@@ -4,11 +4,14 @@
   </DashboardLayout>
 </template>
 
-<script setup>
+<script>
 import DashboardLayout from "@/layouts/DashboardLayout.vue";
 import DashboardComponent from "@/components/DashboardComponent.vue";
-</script>
 
-<style scoped>
-/* Estilos específicos para esta vista si los necesitas */
-</style>
+export default {
+  components: {
+    DashboardLayout,
+    DashboardComponent
+  }
+};
+</script>
