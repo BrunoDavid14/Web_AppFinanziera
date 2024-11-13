@@ -282,3 +282,20 @@ export async function calcularYGuardarTotalGastos(userID) {
     throw error;
   }
 }
+
+export async function obtenerInformeFinancieroCompleto(userID) {
+  try {
+    const totalIngresos = await calcularYGuardarTotalIngresos(userID);
+    const totalGastos = await calcularYGuardarTotalGastos(userID);
+    const balance = (totalIngresos - totalGastos).toFixed(2);
+
+    return {
+      totalIngresos,
+      totalGastos,
+      balance,
+    };
+  } catch (error) {
+    console.error("Error al obtener el informe financiero:", error);
+    throw error;
+  }
+}
