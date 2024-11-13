@@ -225,12 +225,13 @@ export const getBudgetsByUser = async (userid) => {
   }
 };
 
-export const editBudget = async (id, totalAmount, startDate, endDate) => {
+export const editBudget = async (id, totalAmount, startDate, endDate, remainingBalance) => {
   try {
     const response = await axios.put(`${API_URL}budgets/${id}`, {
       totalAmount,
       startDate,
       endDate,
+      remainingBalance,  // Agregamos el campo remainingBalance
     });
     return response.data;
   } catch (error) {

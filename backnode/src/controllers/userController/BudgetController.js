@@ -22,12 +22,11 @@ async function getBudgetsByUser(req, res) {
 }
 
 async function editBudget(req, res) {
-  const { id } = req.params; // ID del presupuesto a editar
-  const { totalAmount, startDate, endDate } = req.body; // Nuevos datos (solo totalAmount, startDate, endDate)
+  const { id } = req.params;
+  const { totalAmount, startDate, endDate, remainingBalance } = req.body;
 
   try {
-    // Llama al servicio para editar el presupuesto
-    const updatedBudget = await budgetService.editBudget(id, { totalAmount, startDate, endDate });
+    const updatedBudget = await budgetService.editBudget(id, { totalAmount, startDate, endDate, remainingBalance });
     if (updatedBudget) {
       res.status(200).json({ message: 'Presupuesto actualizado exitosamente', updatedBudget });
     } else {
@@ -39,7 +38,7 @@ async function editBudget(req, res) {
 }
 
 async function getBudgetHistory(req, res) {
-  const { id } = req.params; // ID del presupuesto
+  const { id } = req.params;
 
   try {
     const history = await budgetService.getBudgetHistory(id);

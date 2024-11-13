@@ -38,12 +38,14 @@
         />
       </div>
       <div class="mb-3">
-        <label for="description" class="form-label">Descripción</label>
-        <textarea
-          v-model="budget.description"
+        <label for="remainingBalance" class="form-label">Saldo Restante</label>
+        <input
+          type="number"
+          v-model="budget.remainingBalance"
           class="form-control"
-          id="description"
-        ></textarea>
+          id="remainingBalance"
+          required
+        />
       </div>
       <button type="submit" class="btn btn-primary">Actualizar Presupuesto</button>
     </form>
@@ -60,7 +62,7 @@ export default {
         totalAmount: null,
         startDate: null,
         endDate: null,
-        description: "", // Añadido para incluir descripción
+        remainingBalance: null, // Añadido para incluir remainingBalance
       },
     };
   },
@@ -73,10 +75,10 @@ export default {
           this.budget.totalAmount,
           this.budget.startDate,
           this.budget.endDate,
-          this.budget.description // Pasar descripción a la función
+          this.budget.remainingBalance // Pasar remainingBalance a la función
         );
         alert("Presupuesto actualizado correctamente.");
-        this.$router.push({ path: "/budgets" });
+        this.$router.push({ path: "/budget" });
       } catch (error) {
         alert("Error al actualizar el presupuesto.");
         console.error(error);
