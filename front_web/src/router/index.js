@@ -12,6 +12,7 @@ import EditReceiptView from "@/views/IngresosViews/EditReceiptView.vue";
 import GetReceiptHistoryView from "@/views/IngresosViews/GetReceiptHistoryView.vue";
 import EditExpensesView from "@/views/GastosViews/EditExpensesView.vue";
 import GetExpensesHistoryView from "@/views/GastosViews/GetExpensesHistoryView.vue";
+import FinancialReporView from "@/views/FinancialReporView.vue";
 
 const routes = [
   {
@@ -88,6 +89,12 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/report",
+    name: "Report",
+    component: FinancialReporView,
     meta: { requiresAuth: true },
   },
 ];

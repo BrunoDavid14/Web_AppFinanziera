@@ -39,7 +39,7 @@
               aria-labelledby="userDropdown"
             >
               <li>
-                <a class="dropdown-item" href="#" @click="perfil">Mi perfil</a>
+                <a class="dropdown-item" href="#" @click="Informe">Informe financiero</a>
               </li>
               <li>
                 <a class="dropdown-item" href="#" @click="GotoRegisterReceipts"
@@ -92,9 +92,9 @@ export default {
       localStorage.removeItem("nombre");
       this.$router.push("/login"); // Redireccionar al login
     },
-    perfil() {
+    Informe() {
       // Redirigir al perfil del usuario
-      this.$router.push("/perfil");
+      this.$router.push("/report");
     },
     GotoRegisterReceipts() {
       this.$router.push("/receipts");
