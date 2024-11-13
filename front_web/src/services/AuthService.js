@@ -225,6 +225,36 @@ export const getBudgetsByUser = async (userid) => {
   }
 };
 
+export const editBudget = async (id, totalAmount, startDate, endDate) => {
+  try {
+    const response = await axios.put(`${API_URL}budgets/${id}`, {
+      totalAmount,
+      startDate,
+      endDate,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al editar el presupuesto:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error("Error al editar el presupuesto");
+  }
+};
+
+export const getBudgetHistory = async (id) => {
+  try {
+    const response = await axios.get(`${API_URL}budgets/${id}/historial`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al obtener el historial del presupuesto:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error("Error al obtener el historial del presupuesto");
+  }
+};
+
 export const createInvestment = async (investmentData) => {
   try {
     const response = await axios.post(`${API_URL}investments`, investmentData);

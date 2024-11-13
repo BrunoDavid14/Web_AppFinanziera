@@ -13,6 +13,8 @@ import GetReceiptHistoryView from "@/views/IngresosViews/GetReceiptHistoryView.v
 import EditExpensesView from "@/views/GastosViews/EditExpensesView.vue";
 import GetExpensesHistoryView from "@/views/GastosViews/GetExpensesHistoryView.vue";
 import FinancialReporView from "@/views/FinancialReporView.vue";
+import EditBudgetWeb from "@/components/Presupuestos/EditBudgetWeb.vue";
+import GetBudgetHistoryWeb from "@/components/Presupuestos/GetBudgetHistoryWeb.vue";
 
 const routes = [
   {
@@ -79,6 +81,18 @@ const routes = [
     component: BudgetView,
     meta: { requiresAuth: true },
   },
+  {
+  path: "/edit-budget/:id",
+  name: "EditBudget",
+  component: EditBudgetWeb,
+  meta: { requiresAuth: true },
+},
+{
+  path: "/history-budget/:id",
+  name: "HistoryBudget",
+  component: GetBudgetHistoryWeb,
+  meta: { requiresAuth: true },
+},
   {
     path: "/investments",
     name: "Investments",
