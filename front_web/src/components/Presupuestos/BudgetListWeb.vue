@@ -20,20 +20,18 @@
                 >
               </p>
               <p>Nombre: {{ budget.name || "No disponible" }}</p>
-              <p>
-                Fecha de Inicio:
-                {{ formatDate(budget.start_date) }}
-              </p>
-              <p>
-                Fecha de Fin:
-                {{ formatDate(budget.end_date) }}
-              </p>
-              <p>
-                Balance Restante:
-                <span class="number">{{
-                  formatCurrency(budget.remaining_balance)
-                }}</span>
-              </p>
+              <p>Fecha de Inicio: {{ formatDate(budget.start_date) }}</p>
+              <p>Fecha de Fin: {{ formatDate(budget.end_date) }}</p>
+              <p>Balance Restante: <span class="number">{{ formatCurrency(budget.remaining_balance) }}</span></p>
+
+              <div class="button-container">
+                <button @click="editBudget(budget.id)" class="btn btn-secondary">
+                  Editar
+                </button>
+                <button @click="historyBudget(budget.id)" class="btn btn-secondary">
+                  Historial
+                </button>
+              </div>
             </div>
           </div>
         </li>
@@ -51,7 +49,7 @@
 </template>
 
 <script>
-import { getBudgetsByUser } from "../../services/AuthService";
+import { editBudget, getBudgetsByUser } from "../../services/AuthService";
 
 export default {
   data() {
@@ -80,6 +78,12 @@ export default {
   methods: {
     goToDashboard() {
       this.$router.push("/dashboard");
+    },
+    editBudget(id) {
+      this.$router.push(`/edit-budget/${id}`);
+    },
+    historyBudget(id) {
+      this.$router.push(`/history-budget/${id}`);
     },
     showCreateBudgetForm() {
       this.$emit("create-budget");
@@ -156,6 +160,7 @@ h2 {
   border: 1px solid #bdc3c7;
   border-radius: 10px;
   padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -171,22 +176,18 @@ h2 {
 }
 
 .budget-info {
-  font-size: 1.2em;
-  font-weight: 500;
-  color: #333;
   flex: 1;
 }
 
-.budget-amount {
-  font-weight: left;
-  font-size: 1em;
-  color: #28a745;
+.number {
+  font-weight: bold;
+  color: #27ae60;
 }
 
-p {
-  font-size: 0.9em;
-  text-align: left;
-  margin-bottom: 20px;
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 }
 
 .btn-create {
@@ -207,19 +208,30 @@ p {
 }
 
 .btn-primary {
-  width: 100%;
-  padding: 10px;
+  display: block;
+  margin: 30px auto;
   background-color: #3498db;
   color: white;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  font-size: 1.2em;
-  cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 15px;
 }
 
 .btn-primary:hover {
   background-color: #2980b9;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
 }
 </style>

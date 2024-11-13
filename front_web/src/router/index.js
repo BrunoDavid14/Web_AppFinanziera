@@ -6,12 +6,15 @@ import ReceiptsView from "../views/IngresosViews/ReceiptsView.vue";
 import GetReceiptsView from "../views/IngresosViews/GetReceiptsView.vue";
 import ExpensesView from "@/views/GastosViews/ExpensesView.vue";
 import GetExpensesView from "@/views/GastosViews/GetExpensesView.vue";
-import BudgetView from "@/views/BudgetView.vue";
+import BudgetView from "@/views/PresupuestosViews/BudgetView.vue";
 import InvestmentView from "../views/InvestmentView.vue";
 import EditReceiptView from "@/views/IngresosViews/EditReceiptView.vue";
 import GetReceiptHistoryView from "@/views/IngresosViews/GetReceiptHistoryView.vue";
 import EditExpensesView from "@/views/GastosViews/EditExpensesView.vue";
 import GetExpensesHistoryView from "@/views/GastosViews/GetExpensesHistoryView.vue";
+import FinancialReporView from "@/views/FinancialReporView.vue";
+import EditBudgetView from "@/views/PresupuestosViews/EditBudgetView.vue";
+import GetBudgetHistoryView from "@/views/PresupuestosViews/GetBudgetHistoryView.vue";
 
 const routes = [
   {
@@ -79,6 +82,18 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+  path: "/edit-budget/:id",
+  name: "EditBudget",
+  component: EditBudgetView,
+  meta: { requiresAuth: true },
+},
+{
+  path: "/history-budget/:id",
+  name: "HistoryBudget",
+  component: GetBudgetHistoryView,
+  meta: { requiresAuth: true },
+},
+  {
     path: "/investments",
     name: "Investments",
     component: InvestmentView,
@@ -88,6 +103,12 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/report",
+    name: "Report",
+    component: FinancialReporView,
     meta: { requiresAuth: true },
   },
 ];
