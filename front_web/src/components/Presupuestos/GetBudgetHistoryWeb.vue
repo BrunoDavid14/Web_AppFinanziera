@@ -10,6 +10,7 @@
           <div class="budget-card">
             <div class="budget-details">
               <p class="amount">Monto Total: ${{ formatAmount(item.total_amount) }}</p>
+              <p>Saldo Restante: ${{ formatAmount(item.remaining_balance) }}</p>
               <p>Fecha de Inicio: {{ formatDate(item.start_date) }}</p>
               <p>Fecha de Fin: {{ formatDate(item.end_date) }}</p>
               <p>Fecha de Actualización: {{ formatDate(item.fecha_actualizacion) }}</p>
