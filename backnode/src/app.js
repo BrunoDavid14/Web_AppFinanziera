@@ -9,6 +9,7 @@ const ExpensesController = require('./controllers/userController/ExpensesControl
 const CategoriasController = require('./controllers/userController/CategoriasController');
 const BudgetController = require('./controllers/userController/BudgetController');
 const InvestmentTrackingController = require('./controllers/userController/InvestmentTrackingController');
+const savingsGoalController = require('./controllers/userController/savingsGoalController');
 
 const app = express();
 
@@ -41,5 +42,6 @@ app.put('/budgets/:id', BudgetController.editBudget);
 app.get('/budgets/:id/historial', BudgetController.getBudgetHistory);
 app.post('/investments', InvestmentTrackingController.createInvestmentTracking);
 app.get('/investments/:userid', InvestmentTrackingController.getInvestmentsByUser);
-
+app.post('/savings-goals', savingsGoalController.createSavingsGoal);
+app.get('/savings-goals/:userId', savingsGoalController.getSavingsGoalsByUser);
 module.exports = app;
