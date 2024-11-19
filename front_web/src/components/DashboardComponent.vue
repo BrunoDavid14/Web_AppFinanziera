@@ -2,16 +2,17 @@
   <div class="dashboard-content">
     <div v-if="totalIngresos || totalGastos">
       <div class="charts">
-        <!-- Primero los gastos -->
         <div v-if="expensesData && expensesData.datasets[0].data.length" class="chart-card">
           <h4 class="chart-title">Total Gastos</h4>
           <PieChart :chart-data="expensesData" :options="chartOptions" />
         </div>
-        
-        <!-- Luego los ingresos -->
         <div v-if="receiptsData && receiptsData.datasets[0].data.length" class="chart-card">
           <h4 class="chart-title">Total Ingresos</h4>
           <PieChart :chart-data="receiptsData" :options="chartOptions" />
+        </div>
+        <div v-if="profitData && profitData.datasets[0].data.length" class="chart-card">
+          <h4 class="chart-title">Utilidades</h4>
+          <PieChart :chart-data="profitData" :options="chartOptions" />
         </div>
       </div>
     </div>
@@ -35,6 +36,7 @@ const totalIngresos = ref(null);
 const totalGastos = ref(null);
 const receiptsData = ref(null);
 const expensesData = ref(null);
+const profitData = ref(null);
 
 const chartOptions = {
   responsive: true,
@@ -49,6 +51,16 @@ const chartOptions = {
   },
 };
 
+// Función para generar colores aleatorios
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 async function fetchData() {
   try {
     const userID = localStorage.getItem("userID");
@@ -62,8 +74,8 @@ async function fetchData() {
       datasets: [
         {
           label: "Ingresos",
-          backgroundColor: ["#4CAF50", "#FFCD56", "#FF6384", "#36A2EB"],
-          data: receipts.map((r) => parseFloat(r.monto)), // Asegurarse de que sean números
+          backgroundColor: receipts.map(() => getRandomColor()), // Colores únicos para cada valor
+          data: receipts.map((r) => parseFloat(r.monto)),
         },
       ],
     };
@@ -76,8 +88,24 @@ async function fetchData() {
       datasets: [
         {
           label: "Gastos",
-          backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
-          data: expenses.map((e) => parseFloat(e.monto)), // Asegurarse de que sean números
+          backgroundColor: expenses.map(() => getRandomColor()), // Colores únicos para cada valor
+          data: expenses.map((e) => parseFloat(e.monto)),
+        },
+      ],
+    };
+
+    // Calcular la utilidad
+    profitData.value = {
+      labels: ["Ingresos", "Gastos", "Utilidades"],
+      datasets: [
+        {
+          label: "Distribución",
+          backgroundColor: ["#4CAF50", "#FF6384", "#36A2EB"], // Colores específicos para las categorías de utilidades
+          data: [
+            totalIngresos.value,
+            totalGastos.value,
+            totalIngresos.value - totalGastos.value,
+          ],
         },
       ],
     };

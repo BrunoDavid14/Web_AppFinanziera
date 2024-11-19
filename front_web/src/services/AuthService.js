@@ -330,3 +330,36 @@ export async function obtenerInformeFinancieroCompleto(userID) {
     throw error;
   }
 }
+
+export const createSavingsGoal = async (name, targetAmount, targetDate, userId) => {
+  try {
+    console.log("Datos enviados al backend desde AuthService:", {
+      name,
+      targetAmount,
+      targetDate,
+      userId,
+    });
+
+    const response = await axios.post(`${API_URL}savings-goals`, {
+      name,
+      targetAmount,
+      targetDate,
+      userId,
+    });
+
+    return response.data; // Respuesta del backend
+  } catch (error) {
+    console.error("Error en AuthService.createSavingsGoal:", error);
+    throw new Error("Error al crear la meta de ahorro. Intenta de nuevo más tarde.");
+  }
+};
+
+export const getSavingsGoals = async (userId) => {
+  try {
+    const response = await axios.get(`${API_URL}savings-goals/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error en AuthService.getSavingsGoals:", error);
+    throw new Error("Error al obtener las metas de ahorro");
+  }
+};
