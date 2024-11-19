@@ -173,132 +173,132 @@ export default {
       this.$router.push("/dashboard");
     },
     generarPDF() {
-  const doc = new jsPDF();
+      const doc = new jsPDF();
 
-  // Título principal
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(18);
-  doc.text("Informe Financiero Anual", 105, 15, { align: "center" });
+      // Título principal
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(18);
+      doc.text("Informe Financiero Anual", 105, 15, { align: "center" });
 
-  // Fechas
-  doc.setFontSize(12);
-  doc.setFont("helvetica", "normal");
-  doc.text(`Rango de fechas: ${this.fechaInicio} - ${this.fechaFin}`, 105, 25, { align: "center" });
+      // Fechas
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "normal");
+      doc.text(`Rango de fechas: ${this.fechaInicio} - ${this.fechaFin}`, 105, 25, { align: "center" });
 
-  // Introducción
-  doc.setFontSize(14);
-  doc.setFont("helvetica", "bold");
-  doc.text("Introducción", 10, 40);
-  doc.setFontSize(11);
-  doc.setFont("helvetica", "normal");
-  doc.text(
-    "Este informe tiene como objetivo analizar el estado financiero del usuario durante el periodo seleccionado. " +
-    "Incluye un desglose detallado de los ingresos, gastos y un balance general. Además, se presentan recomendaciones para mejorar la estabilidad financiera.",
-    10,
-    45,
-    { maxWidth: 190 }
-  );
+      // Introducción
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.text("Introducción", 10, 40);
+      doc.setFontSize(11);
+      doc.setFont("helvetica", "normal");
+      doc.text(
+        "Este informe tiene como objetivo analizar el estado financiero del usuario durante el periodo seleccionado. " +
+        "Incluye un desglose detallado de los ingresos, gastos y un balance general. Además, se presentan recomendaciones para mejorar la estabilidad financiera.",
+        10,
+        45,
+        { maxWidth: 190 }
+      );
 
-  // Resumen Ejecutivo
-  doc.setFontSize(14);
-  doc.setFont("helvetica", "bold");
-  doc.text("Resumen Ejecutivo", 10, 75);
-  doc.setFontSize(11);
-  doc.setFont("helvetica", "normal");
-  doc.text(
-    `Durante el periodo evaluado, el total de ingresos ascendió a $${this.formatearNumero(this.informe.totalIngresos)}, ` +
-    `mientras que los gastos totalizaron $${this.formatearNumero(this.informe.totalGastos)}. ` +
-    `Esto resultó en un balance de $${this.formatearNumero(this.informe.balance)}.`,
-    10,
-    80,
-    { maxWidth: 190 }
-  );
+      // Resumen Ejecutivo
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.text("Resumen Ejecutivo", 10, 75);
+      doc.setFontSize(11);
+      doc.setFont("helvetica", "normal");
+      doc.text(
+        `Durante el periodo evaluado, el total de ingresos ascendió a $${this.formatearNumero(this.informe.totalIngresos)}, ` +
+        `mientras que los gastos totalizaron $${this.formatearNumero(this.informe.totalGastos)}. ` +
+        `Esto resultó en un balance de $${this.formatearNumero(this.informe.balance)}.`,
+        10,
+        80,
+        { maxWidth: 190 }
+      );
 
-  // Indicador de balance
-  const balanceTexto = parseFloat(this.informe.balance) < 0 
-    ? "El balance es negativo, indicando que los gastos superaron los ingresos." 
-    : " El balance es positivo, lo cual refleja un manejo financiero favorable.";
+      // Indicador de balance
+      const balanceTexto = parseFloat(this.informe.balance) < 0 
+        ? "El balance es negativo, indicando que los gastos superaron los ingresos." 
+        : " El balance es positivo, lo cual refleja un manejo financiero favorable.";
 
-  const balanceColor = parseFloat(this.informe.balance) < 0 ? [255, 0, 0] : [0, 128, 0];
-  doc.setTextColor(...balanceColor);
-  doc.setFontSize(12);
-  doc.text(balanceTexto, 10, 95);
-  doc.setTextColor(0, 0, 0); // Reiniciar color
+      const balanceColor = parseFloat(this.informe.balance) < 0 ? [255, 0, 0] : [0, 128, 0];
+      doc.setTextColor(...balanceColor);
+      doc.setFontSize(12);
+      doc.text(balanceTexto, 10, 95);
+      doc.setTextColor(0, 0, 0); // Reiniciar color
 
-  // Desglose de Ingresos
-  doc.setFontSize(14);
-  doc.setFont("helvetica", "bold");
-  doc.text("Desglose por Fuente de Ingreso", 10, 110);
-  doc.setFontSize(11);
-  doc.setFont("helvetica", "normal");
-  doc.text(
-    "En esta sección se detalla cada fuente de ingreso registrada durante el periodo seleccionado, junto con el monto total asociado a cada una.",
-    10,
-    115,
-    { maxWidth: 190 }
-  );
+      // Desglose de Ingresos
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.text("Desglose por Fuente de Ingreso", 10, 110);
+      doc.setFontSize(11);
+      doc.setFont("helvetica", "normal");
+      doc.text(
+        "En esta sección se detalla cada fuente de ingreso registrada durante el periodo seleccionado, junto con el monto total asociado a cada una.",
+        10,
+        115,
+        { maxWidth: 190 }
+      );
 
-  if (Object.keys(this.informe.ingresosPorFuente).length > 0) {
-    doc.autoTable({
-      startY: 125,
-      head: [["Fuente de Ingreso", "Monto"]],
-      body: Object.entries(this.informe.ingresosPorFuente).map(([fuente, monto]) => [
-        fuente,
-        `$${this.formatearNumero(monto)}`,
-      ]),
-    });
-  } else {
-    doc.text("No se encontraron ingresos registrados.", 10, 125);
-  }
+      if (Object.keys(this.informe.ingresosPorFuente).length > 0) {
+        doc.autoTable({
+          startY: 125,
+          head: [["Fuente de Ingreso", "Monto"]],
+          body: Object.entries(this.informe.ingresosPorFuente).map(([fuente, monto]) => [
+            fuente,
+            `$${this.formatearNumero(monto)}`,
+          ]),
+        });
+      } else {
+        doc.text("No se encontraron ingresos registrados.", 10, 125);
+      }
 
-  // Desglose de Gastos
-  const startY = doc.lastAutoTable ? doc.lastAutoTable.finalY + 10 : 140;
-  doc.setFontSize(14);
-  doc.setFont("helvetica", "bold");
-  doc.text("Desglose por Categoría de Gasto", 10, startY);
-  doc.setFontSize(11);
-  doc.setFont("helvetica", "normal");
-  doc.text(
-    "A continuación, se muestran las categorías de gasto identificadas y el monto total asignado a cada una, permitiendo identificar patrones de consumo.",
-    10,
-    startY + 5,
-    { maxWidth: 190 }
-  );
+      // Desglose de Gastos
+      const startY = doc.lastAutoTable ? doc.lastAutoTable.finalY + 10 : 140;
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.text("Desglose por Categoría de Gasto", 10, startY);
+      doc.setFontSize(11);
+      doc.setFont("helvetica", "normal");
+      doc.text(
+        "A continuación, se muestran las categorías de gasto identificadas y el monto total asignado a cada una, permitiendo identificar patrones de consumo.",
+        10,
+        startY + 5,
+        { maxWidth: 190 }
+      );
 
-  if (Object.keys(this.informe.gastosPorCategoria).length > 0) {
-    doc.autoTable({
-      startY: startY + 15,
-      head: [["Categoría de Gasto", "Monto"]],
-      body: Object.entries(this.informe.gastosPorCategoria).map(([categoria, monto]) => [
-        categoria,
-        `$${this.formatearNumero(monto)}`,
-      ]),
-    });
-  } else {
-    doc.text("No se encontraron gastos registrados.", 10, startY + 15);
-  }
+      if (Object.keys(this.informe.gastosPorCategoria).length > 0) {
+        doc.autoTable({
+          startY: startY + 15,
+          head: [["Categoría de Gasto", "Monto"]],
+          body: Object.entries(this.informe.gastosPorCategoria).map(([categoria, monto]) => [
+            categoria,
+            `$${this.formatearNumero(monto)}`,
+          ]),
+        });
+      } else {
+        doc.text("No se encontraron gastos registrados.", 10, startY + 15);
+      }
 
-  // Conclusión
-  const conclusionY = doc.lastAutoTable ? doc.lastAutoTable.finalY + 15 : 200;
-  doc.setFontSize(14);
-  doc.setFont("helvetica", "bold");
-  doc.text("Conclusión", 10, conclusionY);
-  doc.setFontSize(11);
-  doc.setFont("helvetica", "normal");
-  doc.text(
-    "Este análisis financiero refleja la situación actual del usuario. Es importante mantener un balance positivo, " +
-    "diversificar las fuentes de ingreso y reducir gastos innecesarios. Se recomienda realizar un seguimiento periódico " +
-    "de los ingresos y gastos para tomar decisiones informadas.",
-    10,
-    conclusionY + 5,
-    { maxWidth: 190 }
-  );
+      // Conclusión
+      const conclusionY = doc.lastAutoTable ? doc.lastAutoTable.finalY + 15 : 200;
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.text("Conclusión", 10, conclusionY);
+      doc.setFontSize(11);
+      doc.setFont("helvetica", "normal");
+      doc.text(
+        "Este análisis financiero refleja la situación actual del usuario. Es importante mantener un balance positivo, " +
+        "diversificar las fuentes de ingreso y reducir gastos innecesarios. Se recomienda realizar un seguimiento periódico " +
+        "de los ingresos y gastos para tomar decisiones informadas.",
+        10,
+        conclusionY + 5,
+        { maxWidth: 190 }
+      );
 
-  // Guardar PDF
-  const nombreArchivo = prompt("Introduce el nombre para el archivo PDF:", "Informe_Financiero");
-  const nombreFinal = nombreArchivo?.trim() ? `${nombreArchivo.trim()}.pdf` : "Informe_Financiero.pdf";
-  doc.save(nombreFinal);
-}
+      // Guardar PDF
+      const nombreArchivo = prompt("Introduce el nombre para el archivo PDF:", "Informe_Financiero");
+      const nombreFinal = nombreArchivo?.trim() ? `${nombreArchivo.trim()}.pdf` : "Informe_Financiero.pdf";
+      doc.save(nombreFinal);
+    }
   },
 };
 </script>
@@ -308,46 +308,54 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100hv;
+  height: 100vh; /* Corregido de "100hv" a "100vh" */
   padding: 20px;
 }
 
 .financial-report {
   width: 100%;
-  max-width: 1000px; /* Aumenta el ancho máximo */
-  max-height: 95vh; /* Permite más espacio vertical */
-  overflow-y: auto;
+  max-width: 1000px;
+  max-height: 95vh; 
+  overflow-y: auto; /* Permite el scroll vertical */
   background-color: #fdfdfd;
-  padding: 30px; /* Incrementa el espacio interno */
+  padding: 30px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombras más pronunciadas para realismo */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased; /* Suaviza el texto */
 }
 
-h2 {
+.financial-report h2 {
   color: #2c3e50;
-  font-size: 2em; /* Tamaño más grande para el título */
+  font-size: 2em;
   margin-bottom: 10px;
-  text-align: center; /* Centra el texto */
+  text-align: center;
 }
 
-h5 {
+.financial-report h5 {
   color: #2c3e50;
   margin-bottom: 10px;
-  text-align: center; /* Centra el texto */
+  text-align: center; 
 }
 
-h3 {
+.financial-report h3 {
   color: #34495e;
   font-size: 1.5em;
-  margin-top: 20px;
+  margin-top: 30px;
+  border-bottom: 2px solid #ddd; /* Añade una línea divisoria */
+  padding-bottom: 10px;
 }
 
-p {
-  font-size: 1.2em; /* Ligero incremento del tamaño del texto */
+.financial-report p {
+  font-size: 1.2em;
   color: #555;
   margin: 5px 0;
   text-align: justify;
+}
+
+.financial-report strong {
+  color: #2c3e50;
 }
 
 .report-table {
@@ -356,30 +364,87 @@ p {
   margin-top: 15px;
 }
 
-.report-table th,
-.report-table td {
-  padding: 12px 15px;
+.report-table th, .report-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+}
+
+.report-table th {
+  background-color: #2980b9;
+  color: white;
+  font-weight: bold;
+  transition: background-color 0.3s ease; /* Transición suave */
+}
+
+.report-table tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.report-table tbody tr:hover {
+  background-color: #dceefb;
+  transition: background-color 0.3s ease; /* Transición suave */
 }
 
 .button-container {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   margin-top: 20px;
 }
 
-button {
-  padding: 12px 24px; /* Botones más grandes */
+.button-container button {
+  padding: 10px 15px;
+  font-size: 16px;
   background-color: #3498db;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1.2em; /* Texto más grande en el botón */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Transición suave */
 }
 
-button:hover {
+.button-container button:hover {
   background-color: #2980b9;
+  transform: translateY(-2px); /* Efecto de elevación */
+}
+
+.button-container button:not(:last-child) {
+  margin-right: 10px;
+}
+
+/* Estilo para scroll */
+.financial-report::-webkit-scrollbar {
+  width: 8px;
+}
+
+.financial-report::-webkit-scrollbar-track {
+  background: #f2f2f2;
+  border-radius: 4px;
+}
+
+.financial-report::-webkit-scrollbar-thumb {
+  background-color: #3498db;
+  border-radius: 4px;
+  border: 2px solid #f2f2f2;
+}
+
+.financial-report::-webkit-scrollbar-thumb:hover {
+  background-color: #2980b9;
+}
+
+@media (max-width: 600px) {
+  .financial-report-container {
+    padding: 15px;
+  }
+
+  .report-table th, .report-table td {
+    font-size: 14px;
+    padding: 6px;
+  }
+
+  .button-container button {
+    font-size: 14px;
+    padding: 8px 10px;
+  }
 }
 </style>
