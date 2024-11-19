@@ -20,6 +20,9 @@
               >Mis Inversiones</a
             >
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" @click="GotoSavingsGoals">Metas de Ahorro</a> <!-- Nuevo enlace -->
+          </li>
         </ul>
 
         <ul class="navbar-nav ms-auto">
@@ -113,6 +116,9 @@ export default {
     },
     GotoInvestments() {
       this.$router.push("/investments");
+    },
+    GotoSavingsGoals() {
+      this.$router.push("/savings-goals"); // Redirección a la vista de metas de ahorro
     },
     handleClickOutside(event) {
       const dropdown = this.$el.querySelector(".dropdown-menu");

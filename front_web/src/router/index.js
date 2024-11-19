@@ -15,6 +15,7 @@ import GetExpensesHistoryView from "@/views/GastosViews/GetExpensesHistoryView.v
 import FinancialReporView from "@/views/FinancialReporView.vue";
 import EditBudgetView from "@/views/PresupuestosViews/EditBudgetView.vue";
 import GetBudgetHistoryView from "@/views/PresupuestosViews/GetBudgetHistoryView.vue";
+import SavingsGoalsView from "../views/SavingsGoalsView.vue";  // Asegúrate de importar la nueva vista
 
 const routes = [
   {
@@ -82,21 +83,27 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-  path: "/edit-budget/:id",
-  name: "EditBudget",
-  component: EditBudgetView,
-  meta: { requiresAuth: true },
-},
-{
-  path: "/history-budget/:id",
-  name: "HistoryBudget",
-  component: GetBudgetHistoryView,
-  meta: { requiresAuth: true },
-},
+    path: "/edit-budget/:id",
+    name: "EditBudget",
+    component: EditBudgetView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/history-budget/:id",
+    name: "HistoryBudget",
+    component: GetBudgetHistoryView,
+    meta: { requiresAuth: true },
+  },
   {
     path: "/investments",
     name: "Investments",
     component: InvestmentView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/savings-goals",
+    name: "SavingsGoals",  // Ruta para las metas de ahorro
+    component: SavingsGoalsView,  // Asocia la vista a la ruta
     meta: { requiresAuth: true },
   },
   {
