@@ -1,3 +1,4 @@
+PieChart.vue
 <template>
   <div>
     <Pie v-if="chartData && chartData.labels && chartData.datasets" :data="chartData" :options="chartOptions" />
@@ -6,10 +7,10 @@
 </template>
 
 <script>
-import { Pie } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js'
+import { Pie } from "vue-chartjs";
+import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from "chart.js";
 
-ChartJS.register(Title, Tooltip, Legend, ArcElement)
+ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
 export default {
   components: { Pie },
@@ -18,15 +19,14 @@ export default {
       type: Object,
       required: true,
       default: () => ({
-        labels: [], // Se asegura de que labels esté inicializado
-        datasets: [{ data: [] }] // Asegura que datasets esté inicializado
-      })
+        labels: [],
+        datasets: [{ data: [] }],
+      }),
     },
     options: {
       type: Object,
-      required: false,
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   data() {
     return {
@@ -35,15 +35,13 @@ export default {
         plugins: {
           legend: {
             display: true,
-            position: 'top'
-          }
-        }
-      }
-    }
-  }
-}
+            position: "top",
+          },
+        },
+      },
+    };
+  },
+};
 </script>
 
-<style scoped>
-/* Añade estilos personalizados aquí si es necesario */
-</style>
+<style scoped></style>

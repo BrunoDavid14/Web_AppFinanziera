@@ -16,7 +16,7 @@
     <div v-if="savingsGoals.length" class="goals-grid">
       <div v-for="goal in savingsGoals" :key="goal.id" class="goal-card">
         <h2 class="goal-title">{{ goal.nombre }}</h2>
-        <p><strong>Monto Objetivo:</strong> ${{ goal.monto_objetivo }}</p>
+        <p><strong>Monto Objetivo:</strong> ${{ goal.monto_objetivo }}</p>z
         <p><strong>Fecha Inicio:</strong> {{ goal.fecha_inicio }}</p>
         <p><strong>Fecha Fin:</strong> {{ goal.fecha_fin }}</p>
         <p><strong>Frecuencia:</strong> {{ goal.frecuencia }}</p>

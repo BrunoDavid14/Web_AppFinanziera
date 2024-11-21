@@ -3,13 +3,14 @@ const IngresosService = require('../../services/ReceiptsService');
 
 async function createReceipts(req, res) {
   const { monto, fuenteid, fecha, descripcion, userid } = req.body;
-  try {
+  try { 
+    
       // Verifica que la fuente de ingreso exista
       const fuenteExiste = await IngresosService.checkSourceExists(fuenteid);
       if (!fuenteExiste) {
           return res.status(400).json({ error: 'La fuente de ingreso no existe' });
       }
-
+    
       await IngresosService.createReceipts(monto, fuenteid, fecha, descripcion, userid);
       res.status(201).json({ message: 'Ingreso creado exitosamente' });
   } catch (error) {

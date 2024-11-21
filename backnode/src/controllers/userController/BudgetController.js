@@ -6,6 +6,7 @@ async function createBudget(req, res) {
     const { userid, ...budgetData } = req.body;
     const budget = await budgetService.createBudget(budgetData, userid);
     res.status(201).json(budget);
+    console.log(campo)
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
